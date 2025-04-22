@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Agendar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="title" content="AdminLTE v4 | Dashboard" />
+    <meta name="author" content="ColorlibHQ" />
+    <meta name="description" content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS." />
+    <meta name="keywords" content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/styles/overlayscrollbars.min.css" integrity="sha256-tZHrRjVqNSRyWg2wbppGnT833E/Ys0DHWGwT04GiqQg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha256-9kPW/n5nn53j4WMRYAxe9c1rCY96Oogo/MKSVdKzPmI=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/estilos.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous" />
+  </head>
+  <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    <div class="app-wrapper">
+      <nav class="app-header navbar navbar-expand bg-body">
+        <div class="container-fluid">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown"><a class="nav-link" data-bs-toggle="dropdown" href="#"><i class="bi bi-bell-fill"></i><span class="navbar-badge badge text-bg-warning">15</span></a>
+              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end"><span class="dropdown-item dropdown-header">15 Notifications</span>
+                <div class="dropdown-divider"></div><a href="#" class="dropdown-item"><i class="bi bi-envelope me-2"></i> 4 new messages <span class="float-end text-secondary fs-7">3 mins</span></a>
+                <div class="dropdown-divider"></div><a href="#" class="dropdown-item"><i class="bi bi-people-fill me-2"></i> 8 friend requests <span class="float-end text-secondary fs-7">12 hours</span></a>
+                <div class="dropdown-divider"></div><a href="#" class="dropdown-item"><i class="bi bi-file-earmark-fill me-2"></i> 3 new reports <span class="float-end text-secondary fs-7">2 days</span></a>
+                <div class="dropdown-divider"></div><a href="#" class="dropdown-item dropdown-footer"> See All Notifications </a>
+              </div>
+            </li>
+            <li class="nav-item dropdown user-menu"><a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><img src="img/fulanito.svg" class="user-image rounded-circle shadow" alt="User Image" /><span class="d-none d-md-inline">Fulanito Detal</span></a>
+              <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                <li class="user-header text-bg-primary"><img src="img/fulanito.svg" class="rounded-circle shadow" alt="User Image" />
+                  <p> Fulanito Detal - Web Developer <small>Member since Nov. 2023</small></p>
+                </li>
+                <li class="user-body">
+                  <div class="row">
+                    <div class="col-4 text-center"><a href="#">Followers</a></div>
+                    <div class="col-4 text-center"><a href="#">Sales</a></div>
+                    <div class="col-4 text-center"><a href="#">Friends</a></div>
+                  </div>
+                </li>
+                <li class="user-footer"><a href="#" class="btn btn-default btn-flat">Profile</a><a href="#" class="btn btn-default btn-flat float-end">Sign out</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+        <div class="sidebar-brand"><a href="./index.html" class="brand-link"><img src="img/fixtimeLogo.svg" alt="AdminLTE Logo" class="brand-image" /><span class="brand-text fw-light"></span></a></div>
+        <div class="sidebar-wrapper">
+          <nav class="mt-2">
+            <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
+              <li class="nav-item"><a href="index.html" class="nav-link"><i class="bi bi-house-door"></i>
+                  <p>Mis Citas</p>
+                </a></li>
+              <li class="nav-item"><a href="agendar.html" class="nav-link"><i class="bi bi-calendar-date"></i>
+                  <p>Agendar</p>
+                </a></li>
+              <li class="nav-item"><a href="actualizardatos.html" class="nav-link"><i class="bi bi-person-lines-fill"></i>
+                  <p>Actualizar Datos</p>
+                </a></li>
+            </ul>
+          </nav>
+        </div>
+      </aside>
+      <main class="app-main">
+        <div class="app-content-header">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6">
+                <h3 class="mb-0">Agendar</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="app-content">
+          <div class="container">
+            <div class="progress mb-2" role="progressbar" aria-label="succes striped example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 30%; border-radius: 0.375rem"></div>
+            </div>
+            <div class="space"></div>
+            <section class="agendamiento">
+              <div class="card card-info mb-4">
+                <form class="needs-validation" novalidate>
+                  <div class="card-body">
+                    <div class="row g-3">
+                      <div class="col-md-4"><label for="validationCustom04" class="form-label">Departamento</label><select class="form-select" id="validationCustom04" required>
+                          <option selected disabled value="">Selecciona...</option>
+                          <option>...</option>
+                        </select>
+                        <div class="invalid-feedback">Por favor selecciona un departamento</div>
+                      </div>
+                      <div class="col-md-4"><label for="validationCustom04" class="form-label">Ciudad</label><select class="form-select" id="validationCustom04" required>
+                          <option selected disabled value="">Selecciona...</option>
+                          <option>...</option>
+                        </select>
+                        <div class="invalid-feedback">Por favor selecciona un departamento</div>
+                      </div>
+                      <div class="col-md-4"><label for="validationCustom04" class="form-label">Tipo de Servicio</label><select class="form-select" id="validationCustom04" required>
+                          <option selected disabled value="">Selecciona...</option>
+                          <option>...</option>
+                        </select>
+                        <div class="invalid-feedback">Por favor selecciona un tipo de servicio</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer"><button id="btn-paso2" class="btn btn-info" type="submit">Buscar</button></div>
+                </form>
+              </div>
+              <article class="map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.9997921537754!2d-74.08175368467536!3d4.609710043555785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f99a5425a0e6f%3A0x2ddeb5c9b5d3a78a!2sBogotá%2C%20Colombia!5e0!3m2!1ses!2sco!4v1713443512345!5m2!1ses!2sco" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></article>
+            </section>
+          </div>
+          </section>
+        </div>
+      </main>
+      <footer class="app-footer">
+        <div class="float-end d-none d-sm-inline">fixtime</div>
+      </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js" integrity="sha256-dghWARbRe2eLlIJ56wNB+b760ywulqK3DzZYEpsg2fQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="js/adminlte.js"></script>
+    <script>
+      document.getElementById("btn-paso2").addEventListener("click", function() {
+        alert("saliendo")
+        window.location.href = "agendar2.html";
+      });
+      const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
+      const Default = {
+        scrollbarTheme: 'os-theme-light',
+        scrollbarAutoHide: 'leave',
+        scrollbarClickScroll: true,
+      };
+      document.addEventListener('DOMContentLoaded', function() {
+        const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+        if (sidebarWrapper && typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== 'undefined') {
+          OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+            scrollbars: {
+              theme: Default.scrollbarTheme,
+              autoHide: Default.scrollbarAutoHide,
+              clickScroll: Default.scrollbarClickScroll,
+            },
+          });
+        }
+      });
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (() => {
+        'use strict';
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation');
+        // Loop over them and prevent submission
+        Array.from(forms).forEach((form) => {
+          form.addEventListener('submit',
+            (event) => {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+            }, false, );
+        });
+      })();
+    </script>
+  </body>
+</html>

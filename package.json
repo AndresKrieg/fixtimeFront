@@ -1,0 +1,36 @@
+{
+  "name": "basepostcss",
+  "version": "1.0.0",
+  "description": "base para iniciar a trabajar con postcss",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sergio Restrepo",
+  "license": "ISC",
+  "dependencies": {
+    "gulp-install": "^1.1.0",
+    "natives": "^1.1.6",
+    "scrollmagic": "^2.0.8"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.12",
+    "css-mqpacker": "^6.0.2",
+    "cssnano": "^3.10.0",
+    "csswring": "^6.0.3",
+    "graceful-fs": "^4.2.11",
+    "gulp": "^4.0.2",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-postcss": "^7.0.1",
+    "lost": "^8.3.1",
+    "postcss": "^6.0.23",
+    "postcss-cssnext": "^3.1.1",
+    "postcss-import": "^11.1.0",
+    "postcss-mixins": "^6.2.3",
+    "postcss-nested": "^3.0.0",
+    "rucksack-css": "^1.0.2",
+    "smoothscroll": "^0.4.0",
+    "sweetalert": "^2.1.0",
+    "vinyl-fs": "^4.0.0"
+  }
+}

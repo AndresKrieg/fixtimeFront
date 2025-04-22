@@ -1,0 +1,460 @@
+@import "/variables.css"; 
+@import "/reboot.css"; 
+@import "/typography.css"; 
+@import "/utilities.css"; 
+@import "/grid.css"; 
+@import "/forms.css"; 
+@import "/tables.css"; 
+@import "/adminlte-custom.css"; 
+@lost flexbox flex;
+/* mixins */
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+/* estilos siotio web propios*/
+.agendamientoCalendar {
+  & .titleMap {
+    & h1 {
+      text-align: center;
+     }
+     & p {
+      text-align: center;
+     }
+  }
+
+ & .mapSelect{
+
+  height: auto;
+  
+  & aside{
+    &:nth-of-type(1) {
+     & #contenedor-calendario {
+        width: 100%;
+        margin: 0 auto;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      & #calendar {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(67, 66, 93, 0.1);
+        border: 1px solid #e0e0e0;
+      }
+      
+      /* Título del calendario */
+      & .fc-toolbar-title {
+        color: #43425D;
+        font-size: 1.6rem;
+        font-weight: 600;
+      }
+      
+      /* Botones del header */
+      & .fc-button {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+        border-radius: 6px;
+        border: none;
+        transition: background-color 0.2s ease;
+      }
+      
+      /* Botón activo y de navegación */
+      & .fc-button-primary {
+        background-color: #43425D;
+        border-color: #43425D;
+        color: white;
+        margin: 0 5px;
+      }
+      
+      & .fc-button-primary:hover {
+        background-color: #5c5a78;
+        border-color: #5c5a78;
+      }
+      
+      /* Botones deshabilitados */
+      & .fc-button:disabled {
+        background-color: #ccc !important;
+        border-color: #ccc !important;
+      }
+      
+      /* Días seleccionables */
+      & .fc-daygrid-day {
+        transition: background-color 0.2s ease;
+      }
+      
+      & .fc-daygrid-day:hover {
+        background-color: #f2f2f7;
+        cursor: pointer;
+      }
+      
+      /* Evento de clic (resaltado opcional si quieres marcarlo visualmente) */
+      & .fc-daygrid-day.fc-day-today {
+        background-color: #e5e5f3;
+        border: 1px solid #43425D;
+      }
+      
+      /* Nombres de los días (Lun, Mar, etc.) */
+      & .fc-col-header-cell-cushion {
+        color: #43425D;
+        font-weight: 600;
+      }
+   
+    }
+    &:nth-of-type(2) {
+      & div {
+        &:nth-of-type(1) {
+          border: 1px solid rgb(230, 230, 230);
+          border-radius: 10px;
+          padding: 1em;
+          & h3 {
+            font-weight: bolder;
+            color: #4D4F5C;
+            font-size: 1.5em;
+          }
+          & p {
+            font-weight: bolder;
+            color: #4D4F5C;
+            font-size: 1em;
+            margin:5px 0;
+            & i {
+              font-size: .9em;
+              margin-right: 3px;
+              color: rgb(0, 153, 255);
+            }
+          }
+          & a {
+            display: block;
+            background-color: red;
+            padding: 6px 33px;
+            width: fit-content;
+            border-radius: 7px;
+            font-size: .8em;
+            color: white;
+            text-decoration: none;
+          }
+        } 
+        &:nth-of-type(2) {
+          border-radius: 10px;
+          margin-top: 20px;
+          padding: 1em;
+          background-color: #F8F8F8;
+          display: flex;
+          & aside {
+            &:nth-of-type(1) {
+              display: flex;
+              & span {
+                margin-right: 10px;
+                & img {
+                  width: 40px;
+                }
+              }
+              & p {
+                font-size: 20px;
+                font-weight: bolder;
+                line-height: 22px;
+              }
+            }
+          }
+          & :nth-of-type(2) {
+            margin: 0 10px;
+            
+            & select {
+              margin: 0 20px;
+              border: none;
+              padding: 15px 10px;
+            }
+          }
+         
+        }
+        &:nth-of-type(3) {
+          & h3 {
+            font-size: 1em;
+          }
+          & select {
+            margin: 0px;
+            border: none;
+            padding: 15px 10px;
+          }
+        }
+        &:nth-of-type(4) {
+           margin-top: 20px;
+        }
+      }
+    }
+  }
+ }
+}
+.agendamientoCalendar3 {
+  & article {
+    &:nth-of-type(1) {
+      & .info-box-content {
+        padding: 0 10px;
+      }
+      & .deleteServ3 {
+        font-size: 1em;
+        width: 40px;
+        & a{
+          color: red;
+        }
+      }
+    }
+    &:nth-of-type(2) {
+      & textarea{
+        min-height: 200px;
+        resize: none;
+        overflow: auto;
+      }
+    }
+
+  }
+}
+.agendamientoConfirmacion {
+  max-width: 1000px;
+  margin: 0 auto;
+  & .titleMap {
+    text-align: center;
+    color:#43425D;
+    & h3 {
+      font-weight: bolder;
+      color:#43425D;
+    }
+  }
+  & article {
+    display: flex;
+    &:nth-of-type(1) {
+      margin-top: 3em;
+      & aside {
+        display: flex;
+        align-items: center;
+        & div {
+          &:nth-of-type(1) {
+            & figure {
+              width: 40px;
+              margin: 0 10px;
+        
+              overflow: hidden;
+              & img {}
+            }
+          }
+          &:nth-of-type(2) {
+            color: #4D4F5C;
+            & h3 {
+              margin: 0;
+              font-size: 1.2em;
+              font-weight: bold;
+            }
+            & p {
+              font-size: .9em;
+              margin: 0 5px 0 0;
+              font-weight: bolder;
+              color: #0b71af;
+              & i {
+                font-size: .8em;
+                margin-right: 3px;
+                color: red;
+              }
+            }
+          }
+        }
+    }
+    }
+    &:nth-of-type(2) {
+      margin-top: 3em;
+      & aside {
+        display: flex;
+        align-items: center;
+        & div {
+          &:nth-of-type(1) {
+            & figure {
+              width: 40px;
+              margin: 0 10px;
+        
+              overflow: hidden;
+              & img {}
+            }
+          }
+          &:nth-of-type(2) {
+            color: #4D4F5C;
+            & h3 {
+              margin: 0;
+              font-size: 1.2em;
+              font-weight: bold;
+            }
+            & p {
+              font-size: .9em;
+              margin: 0 5px 0 0;
+              font-weight: bolder;
+              color: #0b71af;
+              & i {
+                font-size: .8em;
+                margin-right: 3px;
+                color: red;
+              }
+            }
+          }
+        }
+    }
+    }
+    &:nth-of-type(3) {
+      width: 100%;
+      margin: 0 auto;
+      position: relative;
+      color:#43425D;
+      margin-top: 2em;
+    }
+  }
+}
+.sidebar-brand {
+  background-color: #00000025;
+}
+.sidebar-brand .brand-link .brand-image {
+  max-height: 46px;
+}
+.titlemRoles {
+  & div {
+    &:nth-of-type(1) {
+      & h3 {
+        margin: 0;
+        padding: 0;
+      }
+      & p {
+        margin: 0;
+        padding: 0;
+      }
+    }
+    &:nth-of-type(2) {
+      text-align: right;
+      & button {
+      }
+    }
+  }
+}
+.manejoroles {
+  & table {
+    & tbody {
+      & tr {
+        & td:nth-last-of-type(1) {
+          & button {
+            border: none;
+          }
+        }
+      }
+    }
+  }
+}
+.table-sm>:not(caption)>*>* {
+  padding: .8rem 0;
+}
+.ActualizarRol {
+  height: 100px;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  color: #43425D;
+  & h1 {
+    font-size: 1.5em;
+    font-weight: bolder;
+    text-align: center;
+  }
+  & p {
+    padding: 0 3em;
+    text-align: center;
+  }
+ 
+}
+.form-select {
+  line-height: 1.3em;
+}
+
+.citaprogramada {
+  & .inlineButtonsCard {
+    display: flex;
+    justify-content: end;
+    margin-bottom: .5em;
+    & span {
+      margin: 0 2px;
+    }
+  }
+  & .info-box-content-inner {
+    & .sectComent {
+      & strong {
+        font-size: 12px;
+      }
+      & p {
+        font-size: 12px;
+      }
+    }
+  }
+  & .info-box {
+    padding: .5em;
+  }
+}
+.swal2-modal {
+  background: #FFF;
+  color: #0367a1;
+  border-radius: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  & .swal2-styled {
+    background: #43425D;
+    color: white;
+  }
+  & .swal2-cancel {
+    border: 1px solid #43425D;
+    color: #43425D;
+    background: white;
+  }
+}
+.badge {
+  border: none;
+  margin: 0 3px;
+}
+/* termina estilos siotio web propios*/
+
+@media(--pantallasGrandes) {
+  .container {
+    width: 1400px !important;
+  }
+}
+@media(--tablets) {
+ 
+}
+
+@media(--celulares) {
+
+}
+ 
+/* estilos mobile */
+@custom-media --pantallasGrandes (min-width:1441px) and (max-width:2500px);
+@custom-media --pantallasMedias (min-width:1280px) and (max-width:1440px);
+@custom-media --pantallasPequenas (min-width:1024px) and (max-width:1439px);
+@custom-media --tablets (min-width:991px) and (max-width:1024px);
+@custom-media --celulares (max-width:990px);
+
+/* efectos y animaciones */
+
+ 
+ /* termina estilos mobile */
+      /* termina estilos overlay */
+      ::-webkit-scrollbar {
+        width: 4px;
+        height: 0;
+        overflow-x: hidden
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #fff;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--white);
+      }
+
+/*/////////////////////////////////////*/
+
+.carrusel {
+  min-width: 3000px;
+}
+
+
