@@ -13,44 +13,37 @@
         <div class="card card-info card-outline mb-4">
           <form class="needs-validation" novalidate>
             <div class="card-body">
-              <div class="card-header">
-                <div class="card-title">REGÍSTRATE</div>
-              </div>
               <div class="row g-3">
-                <div class="col-md-6"><label for="validationCustom01" class="form-label">Razon Social</label><input type="text" class="form-control" id="validationCustom01" value="" required />
-                  <div class="valid-feedback">Ok</div>
+                <div class="col-md-6"><label for="validationCustom01" class="form-label">Nombre Completo</label><input type="text" class="form-control" id="NombreCompleto" value="" required />
+                  <div class="valid-feedback">ok!</div>
                 </div>
-                <div class="col-md-6"><label for="validationCustom01" class="form-label">NIT</label><input type="text" class="form-control" id="validationCustom01" value="" required />
-                  <div class="valid-feedback">Ok</div>
+                <div class="col-md-6"><label for="validationCustom02" class="form-label">Documento</label><input type="text" class="form-control" id="DocumentoID" value="" required />
+                  <div class="valid-feedback">ok!</div>
                 </div>
+                <div class="col-md-6"><label for="validationCustom05" class="form-label">Email</label><input type="email" class="form-control" id="CorreoElectronico" required />
+                  <div class="invalid-feedback">Ingrese un email.</div>
+                </div>
+                <div class="col-md-6"><label for="validationCustom05" class="form-label">Telefono</label><input type="tel" class="form-control" id="Telefono" required />
+                  <div class="invalid-feedback">Ingrese un telefono.</div>
+                </div>
+                <div class="col-md-6"><label for="validationCustom05" class="form-label">Direccion</label><input type="tel" class="form-control" id="Direccion" required />
+                  <div class="invalid-feedback">Ingrese una direccion.</div>
+                </div>
+                <div class="col-md-6"><label for="validationCustom05" class="form-label">Contraseña</label><input type="tel" class="form-control" id="Contrasena" required />
+                  <div class="invalid-feedback">Ingrese una contraseña.</div>
+                </div>
+                <div class="col-md-6"><label for="validationCustom04" class="form-label">Tipo de usuario</label><select class="form-select" id="TipoUsuario" required>
+                  <option selected disabled value="">Seleccione...</option>
+                  <option>...</option>
+                </select>
+                <div class="invalid-feedback">Seleccione un tipo de usuario</div>
               </div>
-              <div class="row g-3 mt-2">
-                <div class="col-md-4"><label for="validationCustom01" class="form-label">Usuario</label><input type="text" class="form-control" id="validationCustom01" value="" required />
-                  <div class="valid-feedback">Ok</div>
-                </div>
-                <div class="col-md-4"><label for="validationCustom01" class="form-label">Email</label><input type="text" class="form-control" id="validationCustom01" value="" required />
-                  <div class="valid-feedback">Ok</div>
-                </div>
-                <div class="col-md-4"><label for="validationCustom01" class="form-label">Cedula</label><input type="text" class="form-control" id="validationCustom01" value="" required />
-                  <div class="valid-feedback">Ok</div>
-                </div>
+              <div class="col-md-6"><label for="validationCustom05"  class="form-label">Estado</label><input type="text" class="form-control" id="Direccion" disabled />
+                <div class="invalid-feedback"></div>
               </div>
-              <div class="row g-3 mt-2">
-                <div class="col-md-6"><label for="validationCustom01" class="form-label">Contrasena</label><input type="password" class="form-control" id="validationCustom01" value="" required />
-                  <div class="valid-feedback">Ok</div>
-                </div>
-                <div class="col-md-6"><label for="validationCustom01" class="form-label">Confirmar contrasena</label><input type="password" class="form-control" id="validationCustom01" value="" required />
-                  <div class="valid-feedback">Ok</div>
-                </div>
-              </div>
-              <div class="col-12 mt-2">
-                <div class="form-check"><input class="form-check-input" type="checkbox" value="" id="invalidCheck" required /><label class="form-check-label" for="invalidCheck"> Acepto terminos y condiciones </label>
-                  <div class="invalid-feedback">Debes aceptar terminos y condiciones.</div>
-                </div>
               </div>
             </div>
-            <div class="card-footer"><button class="btn btn-primary" type="submit">Registrarme</button></div>
-            <p class="footLogReg"><a href="register.html" class="text-center"> términos y condiciones / Habeas data </a><a href="register.html" class="text-center"> Ya tienes cuenta? inicia sesión. </a><a href="register.html" class="text-center"> Ingresar como usuario</a></p>
+            <div class="card-footer"><button class="btn btn-primary mt-3" type="submit">Agregar</button></div>
           </form>
           <script>
             (() => {
