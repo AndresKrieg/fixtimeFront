@@ -11,9 +11,12 @@
       <div class="col-md-6 register-box">
         <figure class="logoLogin"><img src="img/logoColor.png" width="100%" alt=""></figure>
         <div class="card card-info card-outline mb-4">
-          <form class="needs-validation" novalidate>
+          <form id="formRegistro" class="needs-validation" novalidate>
             <div class="card-body">
               <div class="row g-3">
+                <div class="col-md-6"><label for="validationCustom00" class="form-label">UsuarioID</label><input type="text" class="form-control" id="UsuarioID" value="" required />
+                  <div class="valid-feedback">ok!</div>
+                </div>
                 <div class="col-md-6"><label for="validationCustom01" class="form-label">Nombre Completo</label><input type="text" class="form-control" id="NombreCompleto" value="" required />
                   <div class="valid-feedback">ok!</div>
                 </div>
@@ -34,13 +37,15 @@
                 </div>
                 <div class="col-md-6"><label for="validationCustom04" class="form-label">Tipo de usuario</label><select class="form-select" id="TipoUsuario" required>
                   <option selected disabled value="">Seleccione...</option>
-                  <option>...</option>
+                  <option value="Administrador">Administrador</option>
+                  <option value="Cliente">Cliente</option>
+                  <option value="Recepcionista">Recepcionista</option>
                 </select>
                 <div class="invalid-feedback">Seleccione un tipo de usuario</div>
               </div>
-              <div class="col-md-6"><label for="validationCustom05"  class="form-label">Estado</label><input type="text" class="form-control" id="Direccion" disabled />
+              <!-- <div class="col-md-6"><label for="validationCustom05"  class="form-label">Estado</label><input type="text" class="form-control" id="Estado" disabled />
                 <div class="invalid-feedback"></div>
-              </div>
+              </div> -->
               </div>
             </div>
             <div class="card-footer"><button class="btn btn-primary mt-3" type="submit">Agregar</button></div>
@@ -60,6 +65,53 @@
                   }, false, );
               });
             })();
+          </script>
+          <script>
+            document.getElementById('formRegistro').addEventListener('submit', async function (e) {
+              e.preventDefault();
+              
+              const form = e.target;
+              if (!form.checkValidity()) {
+                form.classList.add('was-validated');
+                return;
+              }
+          
+              const usuarioDTO = {
+                UsuarioID: document.getElementById('UsuarioID').value.trim(),
+                NombreCompleto: document.getElementById('NombreCompleto').value.trim(),
+                DocumentoID: document.getElementById('DocumentoID').value.trim(),
+                CorreoElectronico: document.getElementById('CorreoElectronico').value.trim(),
+                Telefono: document.getElementById('Telefono').value.trim(),
+                Direccion: document.getElementById('Direccion').value.trim(),
+                Contrasena: document.getElementById('Contrasena').value.trim(),
+                TipoUsuario: document.getElementById('TipoUsuario').value,
+                Estado: true
+              };
+          
+              try {
+                const response = await fetch('https://localhost:7190/Registrarse', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(usuarioDTO)
+                });
+          
+                if (response.ok) {
+                  alert('Usuario agregado exitosamente');
+                  form.reset();
+                  form.classList.remove('was-validated');
+                  window.location.href = "MiCitas.html";
+                } else {
+                  const error = await response.text();
+                  alert('Error al agregar usuario: ' + error);
+                }
+          
+              } catch (error) {
+                console.error('Error al hacer la solicitud:', error);
+                alert('Hubo un error al agregar el usuario');
+              }
+            });
           </script>
         </div>
       </div>
