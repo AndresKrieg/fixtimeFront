@@ -52,6 +52,7 @@
       (() => {
         'use strict';
         const form = document.getElementById('loginForm');
+        
     
         form.addEventListener('submit', async (event) => {
           event.preventDefault();
@@ -72,6 +73,7 @@
       
               if (response.ok) {
                 localStorage.setItem("jwt", data.token);
+                
                 alert("Inicio de sesión exitoso");
                 window.location.href = "index.html";
               } else {

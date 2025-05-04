@@ -52,6 +52,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script src="js/adminlte.js"></script>
+    <script src="js/tokenservice.js"></script>
 
     <script>
       (() => {
@@ -81,7 +82,16 @@
               if (response.ok) {
                 localStorage.setItem("jwt", data.token);
                 alert("Inicio de sesión exitoso");
-                window.location.href = "MiCitas.html";
+                //window.location.href = "MiCitas.html";
+                const token_get=parseJwt(data.token)
+                const user_role=token_get.role
+                if(user_role=="Cliente")
+                {
+                  window.location.href="MiCitas.html"
+                }
+                else if(user_role=="Administrador"){
+                  window.location.href="agendar.html"
+                }
               } else {
                 alert("Credenciales incorrectas");
               }
