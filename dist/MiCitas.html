@@ -66,7 +66,7 @@
         <div class="app-content">
           <div class="container">
             <div class="row">
-              <div class="col-md-6 col-sm-6 col-12">
+              <!-- <div class="col-md-6 col-sm-6 col-12">
                 <div class="info-box ">
                   <div class="info-box-content">
                     <div class="info-box-content-inner"><span class="info-box-icon"><img src="img/calendarIcon.svg" width="100%" alt=""></span>
@@ -161,7 +161,8 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
+              
               <div class="col-md-6 col-sm-6 col-12">
                 <div class="info-box ">
                   <div class="info-box-content">
@@ -183,6 +184,12 @@
                         <aside><strong>Con Servicio tipo 4</strong><strong>$59.000</strong></aside>
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div class="container">
+                  <button id="btnCargarCitas" class="btn btn-primary mb-3">Cargar Mis Citas</button>
+                  <div id="citas-container" class="row">
+                    <!-- Aquí se insertarán dinámicamente las citas -->
                   </div>
                 </div>
                 <div class="card-body">
@@ -208,20 +215,115 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="../../../dist/js/adminlte.js"></script>
-    <script>
-     fetch('https://localhost:5001/api/usuarios')
-        .then(response => response.json())
-        .then(data => {
-          const lista = document.getElementById('usuarios-lista');
-          data.forEach(usuario => {
-            const li = document.createElement('li');
-            li.textContent = usuario.nombre; 
-            lista.appendChild(li);
-          });
-        })
-        .catch(error => console.error('Error al obtener usuarios:', error));
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/tokenservice.js"></script>
 
-     
+    <script>
+      function mostrarCitas(citas) {
+        const contenedor = document.getElementById('citas-container');
+        contenedor.innerHTML = ''; // Limpiar contenedor
+        
+        if (!citas || citas.length === 0) {
+            contenedor.innerHTML = '<div class="col-12"><p class="text-center">No tienes citas agendadas</p></div>';
+            return;
+        }
+    
+        // Crear tabla
+        const tablaHtml = `
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha y Hora</th>
+                        <th>Taller ID</th>
+                        <th>Servicio ID</th>
+                        <th>Vehículo ID</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${citas.map(cita => `
+                    <tr>
+                        <td>${cita.citaId}</td>
+                        <td>${new Date(cita.fechaHora).toLocaleString('es-ES')}</td>
+                        <td>${cita.tallerId || 'N/A'}</td>
+                        <td>${cita.servicioId || 'N/A'}</td>
+                        <td>${cita.vehiculoId || 'N/A'}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-1">Ver</button>
+                            <button class="btn btn-sm btn-outline-danger">Cancelar</button>
+                        </td>
+                    </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>`;
+        
+        contenedor.innerHTML = tablaHtml;
+    }
+
+    async function GetDatesByUserID(){
+      try{
+          const token=localStorage.getItem("jwt")
+          const decode=parseJwt(token)
+          user_id=decode.UsuarioID
+  
+          const response=await fetch("https://localhost:7190/api/Citas/ConsultarCitasPorClienteID/"+user_id,{
+              method: 'GET',
+              headers:{
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer '+token
+              }
+          });
+  
+          if(!response.ok){
+              const errorData = await response.json();
+              throw new Error(errorData.message || "Error al obtener las citas");
+          }
+  
+          var listdate=await response.json()
+          return listdate
+      }catch(error){
+          throw new Error(error.message);
+      }  
+      
+  }
+    
+    // Función auxiliar para determinar el color del badge según el estado
+    
+    // Evento para el botón
+    document.getElementById('btnCargarCitas').addEventListener('click', async () => {
+        try {
+            const citas = await GetDatesByUserID()
+            mostrarCitas(citas);
+        } catch (error) {
+            console.error("Error al cargar citas:", error);
+            
+        }
+    });
+    
+    // Cargar citas automáticamente al entrar a la página
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const loadingSwal = Swal.fire({
+                title: 'Cargando citas',
+                html: 'Por favor espera...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            const citas = await GetDatesByUserID();
+            mostrarCitas(citas);
+            
+            await loadingSwal.close();
+        } catch (error) {
+            console.error("Error al cargar citas:", error);
+            
+        }
+    });
     </script>
   </body>
 </html>

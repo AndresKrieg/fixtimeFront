@@ -11,3 +11,4 @@ function parseJwt(token) {
       return null;
     }
   }
+
