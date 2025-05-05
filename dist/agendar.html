@@ -71,13 +71,49 @@
               <div class="card card-info mb-4">
                 <form class="needs-validation" novalidate>
                   <div class="card-body">
-                    <div class="row g-3">
+                    <div class="card-body">
+                      <div class="row g-3">
+                        <!-- Selector de Talleres -->
+                        <div class="col-md-4">
+                          <label for="selectTaller" class="form-label">Seleccione su taller</label>
+                          <select class="form-select" id="selectTaller" required>
+                            <option selected disabled value="">Cargando talleres...</option>
+                          </select>
+                          <div class="invalid-feedback">Por favor selecciona un taller</div>
+                        </div>
+                        
+                        <!-- Selector de Servicios -->
+                        <div class="col-md-4">
+                          <label for="selectServicio" class="form-label">Seleccione su servicio</label>
+                          <select class="form-select" id="selectServicio" required disabled>
+                            <option selected disabled value="">Primero seleccione un taller</option>
+                          </select>
+                          <div class="invalid-feedback">Por favor selecciona un servicio</div>
+                        </div>
+                        
+                        <!-- Selector de Vehículos -->
+                        <div class="col-md-4">
+                          <label for="selectVehiculo" class="form-label">Seleccione su vehículo</label>
+                          <select class="form-select" id="selectVehiculo" required>
+                            <option selected disabled value="">Cargando vehículos...</option>
+                          </select>
+                          <div class="invalid-feedback">Por favor selecciona un vehículo</div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="row g-3">
                       <div class="col-md-4"><label for="validationCustom04" class="form-label">Selecione su taller</label><select class="form-select" id="validationCustom04" required>
                           <option selected disabled value="">Selecciona...</option>
                           <option>...</option>
                         </select>
                         <div class="invalid-feedback">Por favor selecciona un departamento</div>
                       </div>
+                      <div class="col-md-4"><label for="validationCustom04" class="form-label">Seleccione su servicio</label><select class="form-select" id="validationCustom04" required>
+                        <option selected disabled value="">Selecciona...</option>
+                        <option>...</option>
+                      </select>
+                      <div class="invalid-feedback">Por favor selecciona un departamento</div>
+                    </div> -->
                       <!-- <div class="col-md-4"><label for="validationCustom04" class="form-label">Ciudad</label><select class="form-select" id="validationCustom04" required>
                           <option selected disabled value="">Selecciona...</option>
                           <option>...</option>
@@ -109,6 +145,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="js/adminlte.js"></script>
+    <script src="js/tokenservice.js"></script>
     <script>
       document.getElementById("btn-paso2").addEventListener("click", function() {
         alert("saliendo")
@@ -131,6 +168,247 @@
             }, false, );
         });
       })();
+    </script>
+    <script>
+      const selectTaller = document.getElementById('selectTaller');
+      const selectServicio = document.getElementById('selectServicio');
+      const selectVehiculo = document.getElementById('selectVehiculo');
+      const token=localStorage.getItem("jwt")
+      const decode=parseJwt(token)
+      const user_id=decode.UsuarioID
+
+      async function GetAllGarage(){
+        try{
+          
+          const response=await fetch("https://localhost:7190/api/Taller/ObtenerTalleres",{
+            method:"GET",
+            headers:{
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+token
+            }
+          });
+
+          if(!response.ok){
+            alert("ha ocuriido un error"+response.status)
+          }
+
+          const listgarage=await response.json();
+          return listgarage
+
+
+        }catch(error){
+            console.log("Ha ocurrido un error"+error)
+        }
+      }
+
+      async function GetServicesByTallerId(tallerid) {
+        try {
+            // Validación adicional del ID
+            if (!tallerid || isNaN(tallerid)) {
+                throw new Error("ID de taller inválido");
+            }
+    
+            const url = `https://localhost:7190/api/Servicio/ObtenerServiciosPorTallerID/${tallerid}`;
+            console.log("URL de la solicitud:", url); // Verificar la URL
+            
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                }
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Error HTTP: ${response.status}`);
+            }
+    
+            return await response.json();
+        } catch(error) {
+            console.error("Error al obtener servicios:", error);
+            throw error;
+        }
+    }
+
+      async function GetVehiculeByUserId(){
+        try{
+
+          const response=await fetch("https://localhost:7190/api/Vehiculo/ObtenerVehiculoPorClienteID/"+user_id,{
+            method:"GET",
+            headers:{
+              "Content-Type":"application/json",
+              "Authorization":"Bearer " +token
+            }
+          });
+
+          if(!response.ok){
+            alert("No se ha logrado traer los servicios ofrecidos por ese taller")
+          }
+
+          return await response.json();
+
+        }catch(error){
+            console.log("Error al traer los datos"+error)
+        }
+      }
+    </script>
+
+    
+    <script>
+      async function cargarTalleres() {
+        try {
+            const talleres = await GetAllGarage();
+            console.log("Datos de talleres recibidos:", talleres); // Ver estructura real
+            
+            selectTaller.innerHTML = '';
+            const optionDefault = document.createElement('option');
+            optionDefault.value = '';
+            optionDefault.textContent = 'Seleccione un taller...';
+            optionDefault.selected = true;
+            optionDefault.disabled = true;
+            selectTaller.appendChild(optionDefault);
+            
+            talleres.forEach(taller => {
+                const option = document.createElement('option');
+                
+                // IMPORTANTE: Verifica el nombre real de la propiedad del ID
+                option.value = taller.TallerId || taller.tallerId || taller.id || taller.ID;
+                
+                // Verifica el nombre real de la propiedad del nombre
+                option.textContent = taller.nombre || taller.Nombre || "Taller sin nombre";
+                
+                console.log("Opción creada:", {
+                    value: option.value,
+                    text: option.textContent,
+                    tallerData: taller
+                });
+                
+                selectTaller.appendChild(option);
+            });
+            
+        } catch (error) {
+            console.error("Error cargando talleres:", error);
+            selectTaller.innerHTML = '<option value="">Error cargando talleres</option>';
+        }
+    }
+      
+      // Función para cargar servicios por taller
+      async function cargarServiciosPorTaller(tallerId) {
+        try {
+            // Validar que el tallerId sea un número válido
+            if (!tallerId || isNaN(tallerId)) {
+                console.error("ID de taller inválido:", tallerId);
+                selectServicio.innerHTML = '<option value="">ID de taller inválido</option>';
+                return;
+            }
+    
+            selectServicio.disabled = true;
+            selectServicio.innerHTML = '<option selected disabled value="">Cargando servicios...</option>';
+            
+            console.log("Solicitando servicios para taller ID:", tallerId); // Log del ID
+            
+            const servicios = await GetServicesByTallerId(tallerId);
+            console.log("Respuesta de servicios:", servicios);
+            
+            selectServicio.innerHTML = '';
+            const optionDefault = document.createElement('option');
+            optionDefault.value = '';
+            optionDefault.textContent = 'Seleccione un servicio...';
+            optionDefault.selected = true;
+            optionDefault.disabled = true;
+            selectServicio.appendChild(optionDefault);
+            
+            if (servicios && Array.isArray(servicios) && servicios.length > 0) {
+                servicios.forEach(servicio => {
+                    const option = document.createElement('option');
+                    // Usar servicio.servicioID o servicio.servicioId según corresponda
+                    option.value = servicio.servicioID || servicio.servicioId;
+                    option.textContent = servicio.Nombre || servicio.nombre;
+                    selectServicio.appendChild(option);
+                });
+            } else {
+                selectServicio.innerHTML = '<option value="">No hay servicios disponibles</option>';
+            }
+            
+            selectServicio.disabled = false;
+            
+        } catch (error) {
+            console.error("Error cargando servicios:", error);
+            selectServicio.innerHTML = '<option value="">Error cargando servicios</option>';
+        }
+    }
+      
+      // Función para cargar vehículos del usuario
+      async function cargarVehiculos() {
+        try {
+          const vehiculos = await GetVehiculeByUserId();
+          
+          selectVehiculo.innerHTML = '';
+          const optionDefault = document.createElement('option');
+          optionDefault.value = '';
+          optionDefault.textContent = 'Seleccione un vehículo...';
+          optionDefault.selected = true;
+          optionDefault.disabled = true;
+          selectVehiculo.appendChild(optionDefault);
+          
+          vehiculos.forEach(vehiculo => {
+            const option = document.createElement('option');
+            option.value = vehiculo.VehiculoID;
+            option.textContent = `${vehiculo.Marca} ${vehiculo.Modelo})`;
+            selectVehiculo.appendChild(option);
+          });
+          
+        } catch (error) {
+          console.error("Error cargando vehículos:", error);
+          selectVehiculo.innerHTML = '<option value="">Error cargando vehículos</option>';
+        }
+      }
+      
+      // Evento cuando cambia el selector de talleres
+      selectTaller.addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        console.log("Opción seleccionada:", {
+            value: selectedOption.value,
+            text: selectedOption.text,
+            index: this.selectedIndex
+        });
+        
+        if (selectedOption.value && !isNaN(selectedOption.value)) {
+            console.log("Cargando servicios para taller ID:", selectedOption.value);
+            cargarServiciosPorTaller(parseInt(selectedOption.value));
+        } else {
+            console.warn("No se seleccionó un taller válido. Valor:", selectedOption.value);
+            selectServicio.innerHTML = '<option selected disabled value="">Seleccione un taller válido</option>';
+            selectServicio.disabled = true;
+        }
+    });
+      
+      // Cargar datos al iniciar la página
+      document.addEventListener('DOMContentLoaded', async () => {
+        await cargarTalleres();
+        await cargarVehiculos();
+      });
+
+      document.getElementById("btn-paso2").addEventListener("click", function(e) {
+        e.preventDefault();
+        
+        const form = document.querySelector('.needs-validation');
+        if (!form.checkValidity()) {
+          e.stopPropagation();
+          form.classList.add('was-validated');
+          return;
+        }
+      
+        // Guardar selección para la siguiente página
+        const citaData = {
+          tallerId: selectTaller.value,
+          servicioId: selectServicio.value,
+          vehiculoId: selectVehiculo.value
+        };
+        sessionStorage.setItem('citaData', JSON.stringify(citaData));
+        
+        window.location.href = "agendar2.html";
+      });
     </script>
   </body>
 </html>
