@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/estilos.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/calendar.css">
   </head>
   <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
     <div class="app-wrapper">
@@ -72,27 +73,33 @@
                   <div id="calendar"></div>
                 </aside>
                 <aside class="col-md-4">
-                  <form class="needs-validation" novalidate>
+                  <form class="needs-validation" novalidate id="form-cita">
                     <div>
-                      <h3>CENTRO DE SERVICIO 1</h3>
-                      <p><i class="bi bi-geo-alt-fill"></i>Calle 43 sur #83-15</p><a href="agendar.html">Cambiar</a>
+                      <h3 id="nombre-taller">Cargando datos del taller...</h3>
+                      <p><i class="bi bi-geo-alt-fill"></i><span id="direccion-taller">Cargando dirección...</span></p><a href="agendar.html">Cambiar</a>
                     </div>
                     <div>
                       <aside><span><img src="img/calendarIcon.svg" width="100%" alt=""></span>
-                        <p>Jueves <br>18 Enero</p>
+                        <p id="fecha-seleccionada">Selecciona una fecha</p>
                       </aside>
-                      <aside><select class="form-select" id="validationCustom04" required>
+                      <aside><select class="form-select" id="hora-cita" required>
                           <option selected disabled value="">Selecciona una hora</option>
-                          <option>...</option>
+                          <option value="08:00">08:00 AM</option>
+                          <option value="09:00">09:00 AM</option>
+                          <option value="10:00">10:00 AM</option>
+                          <option value="11:00">11:00 AM</option>
+                          <option value="14:00">02:00 PM</option>
+                          <option value="15:00">03:00 PM</option>
+                          <option value="16:00">04:00 PM</option>
                         </select><span class="invalid-feedback">Seleccione una hora</span></aside>
                     </div>
                     <div>
-                      <h3>¿Deseas agregar un servicio extra?</h3><select class="form-select" id="validationCustom04" required>
+                      <h3>¿Deseas agregar un servicio extra?</h3><select class="form-select" id="servicio-extra" required>
                         <option selected disabled value="">Selecciona una servicio</option>
-                        <option><i class="bi bi-gear-fill"></i>Servicio tipo 1 {precio}</option>
+                        <option value="1"><i class="bi bi-gear-fill"></i>Servicio tipo 1 {precio}</option>
                       </select><span class="invalid-feedback"> Selecciona el tipo de servicio</span>
                     </div>
-                    <div class="card-footer"><button id="btn-paso3" class="btn btn-primary" type="submit">Registrarme</button></div>
+                    <div class="card-footer"><button id="btn-registrar" class="btn btn-primary" type="submit">Registrarme</button></div>
                   </form>
                 </aside>
               </article>
@@ -110,30 +117,63 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="js/adminlte.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-      document.getElementById("btn-paso3").addEventListener("click", function() {
-        window.location.href = "agendar3.html";
-        alert("avanzando")
+      let fechaSeleccionada = null;
+      let horaSeleccionada = null;
+      
+      // Cargar datos del taller desde sessionStorage
+      document.addEventListener('DOMContentLoaded', async function() {
+        try {
+          // Obtener datos del sessionStorage
+          const citaData = JSON.parse(sessionStorage.getItem('citaData')) || {};
+          const tallerId = citaData.tallerId || "1"; // Valor por defecto
+          
+          // Consultar información del taller
+          await cargarDatosTaller(tallerId);
+          
+          // Inicializar el calendario
+          inicializarCalendario();
+          
+          // Configurar el formulario
+          configurarFormulario();
+        } catch(error) {
+          console.error("Error al inicializar la página:", error);
+          mostrarError("No se pudieron cargar los datos correctamente");
+        }
       });
-    
-      // Example starter JavaScript for disabling form submissions if there are invalid fields
-      (() => {
-        'use strict';
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        const forms = document.querySelectorAll('.needs-validation');
-        // Loop over them and prevent submission
-        Array.from(forms).forEach((form) => {
-          form.addEventListener('submit',
-            (event) => {
-              if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-            }, false, );
-        });
-      })();
-      document.addEventListener('DOMContentLoaded', function() {
+      
+      // Función para cargar datos del taller
+      async function cargarDatosTaller(tallerId) {
+        try {
+          const token = localStorage.getItem("jwt")
+          const citaData = JSON.parse(sessionStorage.getItem('citaData')) || {};
+
+          const response = await fetch(`http://localhost:5280/api/Taller/ObtenerTallerPorID/${citaData.tallerId}`, {
+            method: "GET",
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + token
+            }
+          });
+
+          const data = await response.json();
+
+          const taller = {
+            nombre: data.nombre,
+            direccion: data.ubicacion
+          };
+          // Actualizar interfaz con los datos del taller
+          document.getElementById('nombre-taller').textContent = taller.nombre;
+          document.getElementById('direccion-taller').textContent = taller.direccion;
+        } catch(error) {
+          console.error("Error al cargar datos del taller:", error);
+          mostrarError("No se pudo cargar la información del taller");
+        }
+      }
+      
+      // Inicializar calendario
+      function inicializarCalendario() {
         const calendarEl = document.getElementById('calendar');
         const calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth',
@@ -145,12 +185,121 @@
           },
           selectable: true,
           dateClick: function(info) {
-            alert("Has hecho clic en: " + info.dateStr);
-            // Aquí puedes abrir un modal, mostrar un formulario, etc.
+            // Quitar la clase de cualquier fecha previamente seleccionada
+            document.querySelectorAll('.fc-daygrid-day.selected-date')
+                    .forEach(el => el.classList.remove('selected-date'));
+
+            // Agregar la clase a la celda seleccionada
+            info.dayEl.classList.add('selected-date');
+
+            // Guardar la fecha seleccionada
+            fechaSeleccionada = info.dateStr;
+            const fecha = new Date(info.dateStr);
+
+            // Formatear fecha al español
+            const opciones = { weekday: 'long', day: 'numeric', month: 'long' };
+            const fechaFormateada = fecha.toLocaleDateString('es-ES', opciones);
+
+            // Capitalizar primera letra del día y mes
+            const fechaPartes = fechaFormateada.split(' ');
+            const diaSemana = fechaPartes[0].charAt(0).toUpperCase() + fechaPartes[0].slice(1);
+            const diaMes = fechaPartes[1];
+            const nombreMes = fechaPartes[3].charAt(0).toUpperCase() + fechaPartes[3].slice(1);
+
+            // Actualizar texto en la interfaz
+            document.getElementById('fecha-seleccionada').innerHTML = `${diaSemana}<br>${diaMes} ${nombreMes}`;
           }
         });
         calendar.render();
-      });
+      }
+      
+      // Configurar envío del formulario
+      function configurarFormulario() {
+        const token = localStorage.getItem("jwt")
+
+        document.getElementById('form-cita').addEventListener('submit', async function(event) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          if (!this.checkValidity()) {
+            this.classList.add('was-validated');
+            return;
+          }
+          
+          // Recopilar datos del formulario
+          const citaData = JSON.parse(sessionStorage.getItem('citaData')) || {};
+          horaSeleccionada = document.getElementById('hora-cita').value;
+          
+          // Verificar que se haya seleccionado una fecha
+          if (!fechaSeleccionada) {
+            mostrarError("Por favor, selecciona una fecha en el calendario");
+            return;
+          }
+          
+          // Crear fecha y hora combinadas
+          const fechaHora = `${fechaSeleccionada}T${horaSeleccionada}:00.000Z`;
+
+          // Crear objeto de cita para enviar
+          const nuevaCita = {
+            ClienteId: "1",
+            TallerId: parseInt(citaData.tallerId || 1),
+            ServicioId: parseInt(citaData.servicioId || 1),
+            VehiculoId: parseInt(citaData.vehiculoId || 1),
+            FechaHora: fechaHora,
+            Estado: "Pendiente",
+            RecepcionistaId: "2"
+          };
+          
+          console.log("Enviando datos de cita:", nuevaCita);
+
+          try {
+            const response = await fetch(`http://localhost:5280/api/Citas/AgregarNuevaCita`, {
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+              },
+              body: JSON.stringify(nuevaCita)
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+              throw new Error(data.message || 'Error desconocido al agendar la cita.');
+            }
+
+            Swal.fire({
+              title: 'Cita agendada',
+              text: 'Tu cita ha sido agendada correctamente',
+              icon: 'success',
+              confirmButtonText: 'Ver mis citas'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = 'MiCitas.html';
+              }
+            });
+
+          } catch (error) {
+            console.error("Error al agendar cita:", error);
+            Swal.fire({
+              title: 'Error',
+              text: error.message || 'No se pudo agendar la cita. Intenta nuevamente.',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
+          }
+        });
+      }
+      
+      // Función para mostrar errores
+      function mostrarError(mensaje) {
+        Swal.fire({
+          title: 'Error',
+          text: mensaje,
+          icon: 'error',
+          confirmButtonText: 'Entendido'
+        });
+      }
     </script>
   </body>
 </html>
