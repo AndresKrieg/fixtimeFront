@@ -69,7 +69,7 @@
             const Password = document.getElementById("Password").value;
 
             try {
-              const response = await fetch("https://localhost:7190/Logearse", {
+              const response = await fetch("http://localhost:5280/Logearse", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json"
@@ -85,12 +85,16 @@
                 //window.location.href = "MiCitas.html";
                 const token_get=parseJwt(data.token)
                 const user_role=token_get.role
-                if(user_role=="Cliente")
-                {
-                  window.location.href="MiCitas.html"
-                }
-                else if(user_role=="Administrador"){
-                  window.location.href="agendar.html"
+
+                switch (user_role) {
+                    case "Cliente":
+                        window.location.href = "MiCitas.html";
+                        break;
+                    case "Administrador":
+                        window.location.href = "agendar.html";
+                        break;
+                    default:
+                        alert("Rol de usuario no reconocido");
                 }
               } else {
                 alert("Credenciales incorrectas");
