@@ -121,7 +121,67 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="js/adminlte.js"></script>
     <script>
-     
+      (() => {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach((form) => {
+          form.addEventListener('submit',
+            (event) => {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+            }, false, );
+        });
+      })();
+    </script>
+    <script>
+      document.getElementById('formRegistro').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        
+        const form = e.target;
+        if (!form.checkValidity()) {
+          form.classList.add('was-validated');
+          return;
+        }
+    
+        const usuarioDTO = {
+          UsuarioID: document.getElementById('UsuarioID').value.trim(),
+          NombreCompleto: document.getElementById('NombreCompleto').value.trim(),
+          DocumentoID: document.getElementById('DocumentoID').value.trim(),
+          CorreoElectronico: document.getElementById('CorreoElectronico').value.trim(),
+          Telefono: document.getElementById('Telefono').value.trim(),
+          Direccion: document.getElementById('Direccion').value.trim(),
+          Contrasena: document.getElementById('Contrasena').value.trim(),
+          TipoUsuario: document.getElementById('TipoUsuario').value,
+          Estado: true
+        };
+    
+        try {
+          const response = await fetch('http://localhost:5280/Registrarse', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(usuarioDTO)
+          });
+    
+          if (response.ok) {
+            alert('Usuario agregado exitosamente');
+            form.reset();
+            form.classList.remove('was-validated');
+            window.location.href = "index.html";
+          } else {
+            const error = await response.text();
+            alert('Error al agregar usuario: ' + error);
+          }
+    
+        } catch (error) {
+          console.error('Error al hacer la solicitud:', error);
+          alert('Hubo un error al agregar el usuario');
+        }
+      });
     </script>
   </body>
 </html>

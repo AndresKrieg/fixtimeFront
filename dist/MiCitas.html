@@ -94,7 +94,7 @@
 
                         <div class="container">
                             <button id="btnCargarCitas" class="btn btn-primary mb-3">Cargar Mis Citas</button>
-                            <div id="citas-container" class="col-md-6 col-sm-6 col-12">
+                            <div id="citas-container" class="row">
                                 <!-- Aquí se insertarán dinámicamente las citas -->
                             </div>
                         </div>
@@ -134,7 +134,7 @@
 <script>
     function mostrarCitas(citas) {
         const contenedor = document.getElementById('citas-container');
-        contenedor.innerHTML = ''; // Limpiar contenedor
+        contenedor.innerHTML = '';
 
         if (!citas || citas.length === 0) {
             contenedor.innerHTML = '<div class="col-12"><p class="text-center">No tienes citas agendadas</p></div>';
@@ -149,54 +149,78 @@
                 month: 'long',
                 year: 'numeric'
             });
-            const horaTexto = fecha.toLocaleTimeString('es-ES', {hour: '2-digit', minute: '2-digit'});
+            const horaTexto = fecha.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
 
             const card = document.createElement('div');
-            card.className = 'col-12 mb-3';
+            card.className = 'col-md-6 col-sm-6';
 
             card.innerHTML = `
-           <div class="info-box ">
-                            <div class="info-box-content">
-                                <div class="info-box-content-inner"><span class="info-box-icon"><img
-                                        src="img/calendarIcon.svg" width="100%" alt=""></span>
-                                    <div class="col-md-6"><strong>${fechaTexto}</strong>
-                                        <p><i class="bi bi-clock-fill"></i>${horaTexto}</p>
-                                    </div>
-                                    <div class="col-md-6 inlineButtonsCard">
-                                        <button class="actionCard actionSucc">Calificar</button>
-                                        <p>${cita.estado}</p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="info-box-content-inner">
-                                    <div class="col-md-6"><strong> ${cita.taller.nombre || 'N/A'}</strong>
-                                        <p>${cita.taller.ubicacion}</p>
-                                    </div>
-                                    <div class="col-md-6 servCardInner">
-                                        <aside><span class="info-box-icon"><img src="img/servicio.svg" width="100%"
-                                                                                alt=""></span></aside>
-                                        <aside>
-                                        <strong>${cita.servicio.nombre}</strong>
-                                        <p>${cita.servicio.descripcion}</p>
-                                          <strong>${`$${cita.servicio.precio}`}</strong>
-                                          </aside>
-                                    </div>
-                                </div>
+                <div class="info-box">
+                    <div class="info-box-content">
+                        <div class="info-box-content-inner">
+                            <span class="info-box-icon">
+                                <img src="img/calendarIcon.svg" width="100%" alt="">
+                            </span>
+                            <div class="col-md-6">
+                                <strong>${fechaTexto}</strong>
+                                <p><i class="bi bi-clock-fill"></i> ${horaTexto}</p>
+                            </div>
+                            <div class="col-md-6 inlineButtonsCard">
+                                <button class="actionCard actionSucc">Calificar</button>
+                                <p>${cita.estado}</p>
                             </div>
                         </div>
-        `;
+                        <hr>
+                        <div class="info-box-content-inner">
+                            <div class="col-md-6">
+                                <strong>${cita.taller?.nombre || 'N/A'}</strong>
+                                <p>${cita.taller?.ubicacion || ''}</p>
+                            </div>
+                            <div class="col-md-6 servCardInner">
+                                <aside>
+                                    <span class="info-box-icon">
+                                        <img src="img/servicio.svg" width="100%" alt="">
+                                    </span>
+                                </aside>
+                                <aside>
+                                    <strong>${cita.servicio?.nombre || 'Servicio'}</strong>
+                                    <p>${cita.servicio?.descripcion || ''}</p>
+                                    <strong>$${cita.servicio?.precio || 0}</strong>
+                                </aside>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
 
             contenedor.appendChild(card);
         });
     }
 
-    async function GetDatesByUserID() {
+    async function obtenerCitasPorRol() {
         try {
-            const token = localStorage.getItem("jwt")
-            const decode = parseJwt(token)
-            user_id = decode.UsuarioID
+            const token = localStorage.getItem("jwt");
+            const decode = parseJwt(token);
+            const user_id = decode.UsuarioID;
+            const rol = decode.role;
+            console.log("Token decodificado:", decode);
+            console.log(rol);
+            console.log("User ID:", user_id); 
+            console.log("Rol:", rol);
 
-            const response = await fetch("http://localhost:5280/api/Citas/ConsultarCitasPorClienteID/" + user_id, {
+            let url = "";
+
+            if (rol === "Recepcionista") {
+                console.log("URL para Recepcionista");
+                url = "http://localhost:5280/api/Citas/ConsultarCitasPorRcepecionistaID/" + user_id; 
+            } else {
+                console.log("URL para Cliente");
+                url = "http://localhost:5280/api/Citas/ConsultarCitasPorClienteID/" + user_id; 
+            }
+
+            console.log("URL generada:", url); 
+
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -209,46 +233,46 @@
                 throw new Error(errorData.message || "Error al obtener las citas");
             }
 
-            var listdate = await response.json()
-            return listdate
+            return await response.json();
         } catch (error) {
+            console.error("Error en obtenerCitasPorRol:", error.message);
             throw new Error(error.message);
         }
-
     }
-
-    // Función auxiliar para determinar el color del badge según el estado
 
     // Evento para el botón
     document.getElementById("btnCargarCitas").addEventListener("click", async () => {
         try {
-            const citas = await GetDatesByUserID();
+            const citas = await obtenerCitasPorRol();
             mostrarCitas(citas);
         } catch (err) {
             console.error('Error al cargar citas:', err.message);
         }
     });
+
     // Cargar citas automáticamente al entrar a la página
     document.addEventListener('DOMContentLoaded', async () => {
+        const loadingSwal = Swal.fire({
+            title: 'Cargando citas',
+            html: 'Por favor espera...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
         try {
-            const loadingSwal = Swal.fire({
-                title: 'Cargando citas',
-                html: 'Por favor espera...',
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            });
-
-            const citas = await GetDatesByUserID();
+            const citas = await obtenerCitasPorRol();
             mostrarCitas(citas);
-
-            await loadingSwal.close();
-        } catch (error) {
-            console.error("Error al cargar citas:", error);
-
+        } catch (err) {
+            console.error("Error al cargar citas:", err.message);
+        } finally {
+            Swal.close();
         }
     });
 </script>
+
+
+
 </body>
 </html>
