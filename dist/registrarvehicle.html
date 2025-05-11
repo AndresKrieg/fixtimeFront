@@ -18,21 +18,21 @@
               </div>
             <!-- Nombre, Ubicacion, HorarioAtencion, Latitud, Long -->
               <div class="row g-3">
-                <div class="col-md-4"><label for="validationCustom01" class="form-label">Nombre Taller</label><input type="text" class="form-control" id="Nombre" value="" required />
+                <div class="col-md-4"><label for="validationCustom01" class="form-label">Marca vehiculo</label><input type="text" class="form-control" id="Marca" value="" required />
                   <div class="valid-feedback">Ok</div>
                 </div>
-                <div class="col-md-4"><label for="validationCustom01" class="form-label">Barrio</label><input type="text" class="form-control" id="Ubicacion" value="" required />
+                <div class="col-md-4"><label for="validationCustom01" class="form-label">Modelo</label><input type="text" class="form-control" id="Modelo" value="" required />
                   <div class="valid-feedback">Ok</div>
                 </div>
-                <div class="col-md-4"><label for="validationCustom01" class="form-label">Horario</label><input type="text" class="form-control" id="HorarioAtencion" value="" required />
+                <div class="col-md-4"><label for="validationCustom01" class="form-label">Año</label><input type="text" class="form-control" id="Año" value="" required />
                   <div class="valid-feedback">Ok</div>
                 </div>
-                <div class="col-md-4"><label for="validationCustom01" class="form-label">Latitud</label><input type="text" class="form-control" id="Latitud" value="" required />
+                <div class="col-md-4"><label for="validationCustom01" class="form-label">¿Que problema tiene el vehiculo?</label><input type="textbox" class="form-control" id="ProblemaDescripcion" value="" required />
                   <div class="valid-feedback">Ok</div>
                 </div>
-                <div class="col-md-4"><label for="validationCustom01" class="form-label">Longitud</label><input type="text" class="form-control" id="Longitud" value="" required />
+                <!-- <div class="col-md-4"><label for="validationCustom01" class="form-label">Longitud</label><input type="text" class="form-control" id="Longitud" value="" required />
                   <div class="valid-feedback">Ok</div>
-                </div>
+                </div> -->
               </div>
              <!--  <div class="card-header">
                 <div class="card-title">Datos administrador CST</div>
@@ -105,32 +105,31 @@
     const decode=parseJwt(token)
     const user_id=decode.UsuarioID
   
-    async function AddGarage(){
+    async function AddVehicle(){
       try{
 
-        const tallerDTO = {
-          Nombre: document.getElementById("Nombre").value,
-          Ubicacion: document.getElementById("Ubicacion").value,
-          HorarioAtencion: document.getElementById("HorarioAtencion").value,
-          AdministradorID: user_id,
-          Latitud: parseFloat(document.getElementById("Latitud").value),
-          Longitud: parseFloat(document.getElementById("Longitud").value),
-          
+        const VehiculoDTO = {
+          Marca: document.getElementById("Marca").value,
+          Modelo: document.getElementById("Modelo").value,
+          Año: parseInt(document.getElementById("Año").value),
+          ProblemaDescripcion:document.getElementById("ProblemaDescripcion").value,
+          ClienteID: user_id
         };
+        console.log("Datos a enviar:", VehiculoDTO);
 
-        var response=await fetch("https://localhost:7190/api/Taller/RegistrarTaller",{
+        var response=await fetch("https://localhost:7190/api/Vehiculo/AgregarVehiculo",{
           method:"POST",
           headers:{
             "Content-Type":"application/json",
             "Authorization":"Bearer "+token
           },
-          body: JSON.stringify(tallerDTO)
+          body: JSON.stringify(VehiculoDTO)
         });
   
         if(response.ok){
           Swal.fire({
-            title: 'Taller registrado correctamente',
-            text: 'Tu taller ha sido registrado correctamente',
+            title: 'Vehiculo registrado correctamente',
+            text: 'Tu vehiculo ha sido registrado correctamente',
             icon: 'success',
             confirmButtonText: 'Ver mis citas'
           }).then((result) => {
@@ -159,7 +158,7 @@
       form.classList.add('was-validated');
 
       if (form.checkValidity()) {
-        await AddGarage(); // Llamar a tu función que hace la petición al endpoint
+        await AddVehicle(); // Llamar a tu función que hace la petición al endpoint
   }
 });
     </script>

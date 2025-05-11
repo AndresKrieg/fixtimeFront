@@ -14,6 +14,30 @@
     <link rel="stylesheet" href="css/estilos.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous" />
+    <style>
+      .map-container {
+        margin-top: 20px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      
+      #map {
+        height: 400px;
+        width: 100%;
+      }
+      
+      .gm-style-iw {
+        padding: 10px;
+        font-family: 'Source Sans 3', sans-serif;
+      }
+      
+      .gm-style-iw h3 {
+        margin-top: 0;
+        margin-bottom: 5px;
+        font-size: 16px;
+      }
+    </style>
   </head>
   <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
     <div class="app-wrapper">
@@ -101,242 +125,272 @@
                         </div>
                       </div>
                     </div>
-                    <!-- <div class="row g-3">
-                      <div class="col-md-4"><label for="validationCustom04" class="form-label">Selecione su taller</label><select class="form-select" id="validationCustom04" required>
-                          <option selected disabled value="">Selecciona...</option>
-                          <option>...</option>
-                        </select>
-                        <div class="invalid-feedback">Por favor selecciona un departamento</div>
-                      </div>
-                      <div class="col-md-4"><label for="validationCustom04" class="form-label">Seleccione su servicio</label><select class="form-select" id="validationCustom04" required>
-                        <option selected disabled value="">Selecciona...</option>
-                        <option>...</option>
-                      </select>
-                      <div class="invalid-feedback">Por favor selecciona un departamento</div>
-                    </div> -->
-                      <!-- <div class="col-md-4"><label for="validationCustom04" class="form-label">Ciudad</label><select class="form-select" id="validationCustom04" required>
-                          <option selected disabled value="">Selecciona...</option>
-                          <option>...</option>
-                        </select>
-                        <div class="invalid-feedback">Por favor selecciona un departamento</div>
-                      </div> -->
-                 <!--      <div class="col-md-4"><label for="validationCustom04" class="form-label">Tipo de Servicio</label><select class="form-select" id="validationCustom04" required>
-                          <option selected disabled value="">Selecciona...</option>
-                          <option>...</option>
-                        </select>
-                        <div class="invalid-feedback">Por favor selecciona un tipo de servicio</div>
-                      </div> -->
-                    </div>
                   </div>
                   <div class="card-footer"><button id="btn-paso2" class="btn btn-info" type="submit">Buscar</button></div>
                 </form>
               </div>
-<!--               <article class="map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.9997921537754!2d-74.08175368467536!3d4.609710043555785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f99a5425a0e6f%3A0x2ddeb5c9b5d3a78a!2sBogotá%2C%20Colombia!5e0!3m2!1ses!2sco!4v1713443512345!5m2!1ses!2sco" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></article>
- -->            </section>
+              
+              <!-- Contenedor del mapa -->
+              <div class="map-container">
+                <div id="map"></div>
+              </div>
+            </section>
           </div>
-          </section>
         </div>
       </main>
       <footer class="app-footer">
         <div class="float-end d-none d-sm-inline">fixtime</div>
       </footer>
     </div>
+    
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js" integrity="sha256-dghWARbRe2eLlIJ56wNB+b760ywulqK3DzZYEpsg2fQ=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="js/adminlte.js"></script>
     <script src="js/tokenservice.js"></script>
+    
+    <!-- API de Google Maps (reemplaza TU_API_KEY con tu clave real) -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD88arBYGxam0ov-DxtNx_LnJ_mH-9yqDo&callback=initMap" async defer></script>
+    
     <script>
-      document.getElementById("btn-paso2").addEventListener("click", function() {
-        alert("saliendo")
-        window.location.href = "agendar2.html";
-      });
-      // Example starter JavaScript for disabling form submissions if there are invalid fields
-      (() => {
-        'use strict';
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        const forms = document.querySelectorAll('.needs-validation');
-        // Loop over them and prevent submission
-        Array.from(forms).forEach((form) => {
-          form.addEventListener('submit',
-            (event) => {
-              if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-            }, false, );
-        });
-      })();
-    </script>
-    <script>
+      // Variables globales
       const selectTaller = document.getElementById('selectTaller');
       const selectServicio = document.getElementById('selectServicio');
       const selectVehiculo = document.getElementById('selectVehiculo');
-      const token=localStorage.getItem("jwt")
-      const decode=parseJwt(token)
-      const user_id=decode.UsuarioID
-
-      async function GetAllGarage(){
-        try{
+      const token = localStorage.getItem("jwt");
+      const decode = parseJwt(token);
+      const user_id = decode.UsuarioID;
+      
+      // Variables para el mapa
+      let map;
+      let markers = [];
+      
+      // Función para inicializar el mapa
+      function initMap() {
+        // Coordenadas iniciales (Bogotá como ejemplo)
+        const medellin = { lat: 6.2442, lng: -75.5812 };
+        
+        // Crear el mapa
+        map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 12,
+          center: medellin,
+          mapTypeId: 'roadmap'
+        });
+        
+        // Cargar talleres en el mapa
+        cargarTalleresEnMapa();
+      }
+      
+      // Función para agregar talleres al mapa
+      async function cargarTalleresEnMapa() {
+        try {
+          // Limpiar marcadores existentes
+          clearMarkers();
           
-          const response=await fetch("https://localhost:7190/api/Taller/ObtenerTalleres",{
-            method:"GET",
-            headers:{
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer '+token
+          const talleres = await GetAllGarage();
+          
+          if (!talleres || talleres.length === 0) {
+            console.log("No hay talleres para mostrar");
+            return;
+          }
+          
+          // Crear un marcador para cada taller
+          talleres.forEach(taller => {
+            // Verificar que el taller tenga coordenadas válidas
+            if (taller.latitud && taller.longitud) {
+              const position = {
+                lat: taller.latitud,
+                lng: taller.longitud
+              };
+              
+              const marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: taller.nombre || "Taller sin nombre"
+              });
+              
+              // Agregar info window (ventana de información)
+              const infoWindow = new google.maps.InfoWindow({
+                content: `<div><strong>${taller.nombre || "Taller"}</strong><br>
+                         ${taller.ubicacion || "Dirección no disponible"}</div>`
+              });
+              
+              marker.addListener("click", () => {
+                infoWindow.open(map, marker);
+              });
+              
+              markers.push(marker);
             }
           });
-
-          if(!response.ok){
-            alert("ha ocuriido un error"+response.status)
+          
+          // Ajustar el zoom para que todos los marcadores sean visibles
+          if (markers.length > 0) {
+            const bounds = new google.maps.LatLngBounds();
+            markers.forEach(marker => bounds.extend(marker.getPosition()));
+            map.fitBounds(bounds);
+            
+            // Si solo hay un marcador, establecer un zoom adecuado
+            if (markers.length === 1) {
+              map.setZoom(15);
+            }
           }
-
-          const listgarage=await response.json();
-          return listgarage
-
-
-        }catch(error){
-            console.log("Ha ocurrido un error"+error)
+          
+        } catch (error) {
+          console.error("Error al cargar talleres en el mapa:", error);
         }
       }
-
+      
+      // Función para limpiar marcadores
+      function clearMarkers() {
+        markers.forEach(marker => marker.setMap(null));
+        markers = [];
+      }
+      
+      // Funciones para obtener datos de la API
+      async function GetAllGarage() {
+        try {
+          const response = await fetch("https://localhost:7190/api/Taller/ObtenerTalleres", {
+            method: "GET",
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + token
+            }
+          });
+      
+          if (!response.ok) {
+            alert("Ha ocurrido un error: " + response.status);
+            return [];
+          }
+      
+          return await response.json();
+        } catch(error) {
+          console.log("Ha ocurrido un error:", error);
+          return [];
+        }
+      }
+      
       async function GetServicesByTallerId(tallerid) {
         try {
-            // Validación adicional del ID
-            if (!tallerid || isNaN(tallerid)) {
-                throw new Error("ID de taller inválido");
-            }
-    
-            const url = `https://localhost:7190/api/Servicio/ObtenerServiciosPorTallerID/${tallerid}`;
-            console.log("URL de la solicitud:", url); // Verificar la URL
-            
-            const response = await fetch(url, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + token
-                }
-            });
-    
-            if (!response.ok) {
-                throw new Error(`Error HTTP: ${response.status}`);
-            }
-    
-            return await response.json();
-        } catch(error) {
-            console.error("Error al obtener servicios:", error);
-            throw error;
-        }
-    }
-
-      async function GetVehiculeByUserId(){
-        try{
-
-          const response=await fetch("https://localhost:7190/api/Vehiculo/ObtenerVehiculoPorClienteID/"+user_id,{
-            method:"GET",
-            headers:{
-              "Content-Type":"application/json",
-              "Authorization":"Bearer " +token
+          if (!tallerid || isNaN(tallerid)) {
+            throw new Error("ID de taller inválido");
+          }
+      
+          const url = `https://localhost:7190/api/Servicio/ObtenerServiciosPorTallerID/${tallerid}`;
+          const response = await fetch(url, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + token
             }
           });
-
-          if(!response.ok){
-            alert("No se ha logrado traer los servicios ofrecidos por ese taller")
+      
+          if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
           }
-
+      
           return await response.json();
-
-        }catch(error){
-            console.log("Error al traer los datos"+error)
+        } catch(error) {
+          console.error("Error al obtener servicios:", error);
+          throw error;
         }
       }
-    </script>
-
-    
-    <script>
+      
+      async function GetVehiculeByUserId() {
+        try {
+          const response = await fetch(`https://localhost:7190/api/Vehiculo/ObtenerVehiculoPorClienteID/${user_id}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + token
+            }
+          });
+      
+          if (!response.ok) {
+            alert("No se ha logrado obtener los vehículos");
+            return [];
+          }
+      
+          return await response.json();
+        } catch(error) {
+          console.log("Error al traer los datos:", error);
+          return [];
+        }
+      }
+      
+      // Función para cargar talleres en el select
       async function cargarTalleres() {
         try {
-            const talleres = await GetAllGarage();
-            console.log("Datos de talleres recibidos:", talleres); // Ver estructura real
-            
-            selectTaller.innerHTML = '';
-            const optionDefault = document.createElement('option');
-            optionDefault.value = '';
-            optionDefault.textContent = 'Seleccione un taller...';
-            optionDefault.selected = true;
-            optionDefault.disabled = true;
-            selectTaller.appendChild(optionDefault);
-            
-            talleres.forEach(taller => {
-                const option = document.createElement('option');
-                
-                // IMPORTANTE: Verifica el nombre real de la propiedad del ID
-                option.value = taller.TallerId || taller.tallerId || taller.id || taller.ID || taller.tallerID;
-                
-                // Verifica el nombre real de la propiedad del nombre
-                option.textContent = taller.nombre || taller.Nombre || "Taller sin nombre";
-                
-                console.log("Opción creada:", {
-                    value: option.value,
-                    text: option.textContent,
-                    tallerData: taller
-                });
-                
-                selectTaller.appendChild(option);
-            });
-            
+          const talleres = await GetAllGarage();
+          console.log("Datos de talleres recibidos:", talleres);
+          
+          selectTaller.innerHTML = '';
+          const optionDefault = document.createElement('option');
+          optionDefault.value = '';
+          optionDefault.textContent = 'Seleccione un taller...';
+          optionDefault.selected = true;
+          optionDefault.disabled = true;
+          selectTaller.appendChild(optionDefault);
+          
+          talleres.forEach(taller => {
+            const option = document.createElement('option');
+            option.value = taller.TallerId || taller.tallerId || taller.id || taller.ID || taller.tallerID;
+            option.textContent = taller.nombre || taller.Nombre || "Taller sin nombre";
+            selectTaller.appendChild(option);
+          });
+          
+          // Actualizar el mapa con los talleres
+          if (typeof google !== 'undefined' && google.maps) {
+            cargarTalleresEnMapa();
+          }
+          
         } catch (error) {
-            console.error("Error cargando talleres:", error);
-            selectTaller.innerHTML = '<option value="">Error cargando talleres</option>';
+          console.error("Error cargando talleres:", error);
+          selectTaller.innerHTML = '<option value="">Error cargando talleres</option>';
         }
-    }
+      }
       
       // Función para cargar servicios por taller
       async function cargarServiciosPorTaller(tallerId) {
         try {
-            // Validar que el tallerId sea un número válido
-            if (!tallerId || isNaN(tallerId)) {
-                console.error("ID de taller inválido:", tallerId);
-                selectServicio.innerHTML = '<option value="">ID de taller inválido</option>';
-                return;
-            }
-    
-            selectServicio.disabled = true;
-            selectServicio.innerHTML = '<option selected disabled value="">Cargando servicios...</option>';
-            
-            console.log("Solicitando servicios para taller ID:", tallerId); // Log del ID
-            
-            const servicios = await GetServicesByTallerId(tallerId);
-            console.log("Respuesta de servicios:", servicios);
-            
-            selectServicio.innerHTML = '';
-            const optionDefault = document.createElement('option');
-            optionDefault.value = '';
-            optionDefault.textContent = 'Seleccione un servicio...';
-            optionDefault.selected = true;
-            optionDefault.disabled = true;
-            selectServicio.appendChild(optionDefault);
-            
-            if (servicios && Array.isArray(servicios) && servicios.length > 0) {
-                servicios.forEach(servicio => {
-                    const option = document.createElement('option');
-                    // Usar servicio.servicioID o servicio.servicioId según corresponda
-                    option.value = servicio.servicioID || servicio.servicioId;
-                    option.textContent = servicio.Nombre || servicio.nombre;
-                    selectServicio.appendChild(option);
-                });
-            } else {
-                selectServicio.innerHTML = '<option value="">No hay servicios disponibles</option>';
-            }
-            
-            selectServicio.disabled = false;
-            
+          if (!tallerId || isNaN(tallerId)) {
+            console.error("ID de taller inválido:", tallerId);
+            selectServicio.innerHTML = '<option value="">ID de taller inválido</option>';
+            return;
+          }
+      
+          selectServicio.disabled = true;
+          selectServicio.innerHTML = '<option selected disabled value="">Cargando servicios...</option>';
+          
+          const servicios = await GetServicesByTallerId(tallerId);
+          console.log("Respuesta de servicios:", servicios);
+          
+          selectServicio.innerHTML = '';
+          const optionDefault = document.createElement('option');
+          optionDefault.value = '';
+          optionDefault.textContent = 'Seleccione un servicio...';
+          optionDefault.selected = true;
+          optionDefault.disabled = true;
+          selectServicio.appendChild(optionDefault);
+          
+          if (servicios && Array.isArray(servicios) && servicios.length > 0) {
+            servicios.forEach(servicio => {
+              const option = document.createElement('option');
+              option.value = servicio.servicioID || servicio.servicioId;
+              option.textContent = servicio.Nombre || servicio.nombre;
+              selectServicio.appendChild(option);
+            });
+          } else {
+            selectServicio.innerHTML = '<option value="">No hay servicios disponibles</option>';
+          }
+          
+          selectServicio.disabled = false;
+          
         } catch (error) {
-            console.error("Error cargando servicios:", error);
-            selectServicio.innerHTML = '<option value="">Error cargando servicios</option>';
+          console.error("Error cargando servicios:", error);
+          selectServicio.innerHTML = '<option value="">Error cargando servicios</option>';
         }
-    }
+      }
       
       // Función para cargar vehículos del usuario
       async function cargarVehiculos() {
@@ -352,7 +406,6 @@
           selectVehiculo.appendChild(optionDefault);
           
           vehiculos.forEach(vehiculo => {
-            console.log({vehiculo})
             const option = document.createElement('option');
             option.value = vehiculo.vehiculoID;
             option.textContent = `${vehiculo.marca} ${vehiculo.modelo}`;
@@ -368,28 +421,51 @@
       // Evento cuando cambia el selector de talleres
       selectTaller.addEventListener('change', function() {
         const selectedOption = this.options[this.selectedIndex];
-        console.log("Opción seleccionada:", {
-            value: selectedOption.value,
-            text: selectedOption.text,
-            index: this.selectedIndex
-        });
         
         if (selectedOption.value && !isNaN(selectedOption.value)) {
-            console.log("Cargando servicios para taller ID:", selectedOption.value);
-            cargarServiciosPorTaller(parseInt(selectedOption.value));
+          cargarServiciosPorTaller(parseInt(selectedOption.value));
+          
+          // Resaltar el taller seleccionado en el mapa
+          if (markers.length > 0) {
+            const selectedTallerId = parseInt(selectedOption.value);
+            markers.forEach(marker => {
+              // Asumimos que el marker tiene una propiedad tallerId
+              if (marker.tallerId === selectedTallerId) {
+                // Animación para resaltar el marcador
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+                setTimeout(() => {
+                  marker.setAnimation(null);
+                }, 1500);
+                
+                // Centrar el mapa en el marcador
+                map.panTo(marker.getPosition());
+                map.setZoom(15);
+              }
+            });
+          }
         } else {
-            console.warn("No se seleccionó un taller válido. Valor:", selectedOption.value);
-            selectServicio.innerHTML = '<option selected disabled value="">Seleccione un taller válido</option>';
-            selectServicio.disabled = true;
+          selectServicio.innerHTML = '<option selected disabled value="">Seleccione un taller válido</option>';
+          selectServicio.disabled = true;
         }
-    });
-      
-      // Cargar datos al iniciar la página
-      document.addEventListener('DOMContentLoaded', async () => {
-        await cargarTalleres();
-        await cargarVehiculos();
       });
-
+      
+      // Validación del formulario
+      (() => {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+        
+        Array.from(forms).forEach((form) => {
+          form.addEventListener('submit', (event) => {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      })();
+      
+      // Evento para el botón de siguiente paso
       document.getElementById("btn-paso2").addEventListener("click", function(e) {
         e.preventDefault();
         
@@ -409,6 +485,12 @@
         sessionStorage.setItem('citaData', JSON.stringify(citaData));
         
         window.location.href = "agendar2.html";
+      });
+      
+      // Cargar datos al iniciar la página
+      document.addEventListener('DOMContentLoaded', async () => {
+        await cargarTalleres();
+        await cargarVehiculos();
       });
     </script>
   </body>
