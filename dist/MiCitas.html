@@ -200,10 +200,10 @@
 
             if (rol === "Recepcionista") {
                 console.log("URL para Recepcionista");
-                url = "https://localhost:7190/api/Citas/ConsultarCitasPorRcepecionistaID/" + user_id; 
+                url = "http://localhost:5280/api/Citas/ConsultarCitasPorRcepecionistaID/" + user_id; 
             } else {
                 console.log("URL para Cliente");
-                url = "https://localhost:7190/api/Citas/ConsultarCitasPorClienteID/" + user_id; 
+                url = "http://localhost:5280/api/Citas/ConsultarCitasPorClienteID/" + user_id; 
             }
  
             console.log("URL generada:", url); 

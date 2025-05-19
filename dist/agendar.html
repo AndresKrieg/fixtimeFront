@@ -60,18 +60,8 @@
       <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
         <div class="sidebar-brand"><a href="./index.html" class="brand-link"><img src="img/fixtimeLogo.svg" alt="AdminLTE Logo" class="brand-image" /><span class="brand-text fw-light"></span></a></div>
         <div class="sidebar-wrapper">
-          <nav class="mt-2">
-            <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
-              <li class="nav-item"><a href="MiCitas.html" class="nav-link"><i class="bi bi-house-door"></i>
-                  <p>Mis Citas</p>
-                </a></li>
-              <li class="nav-item"><a href="agendar.html" class="nav-link"><i class="bi bi-calendar-date"></i>
-                  <p>Agendar</p>
-                </a></li>
-              <li class="nav-item"><a href="actualizardatos.html" class="nav-link"><i class="bi bi-person-lines-fill"></i>
-                  <p>Actualizar Datos</p>
-                </a></li>
-            </ul>
+          <nav class="mt-2" id="nav">
+      
           </nav>
         </div>
       </aside>
@@ -250,7 +240,7 @@
       // Funciones para obtener datos de la API
       async function GetAllGarage() {
         try {
-          const response = await fetch("https://localhost:7190/api/Taller/ObtenerTalleres", {
+          const response = await fetch("http://localhost:5280/api/Taller/ObtenerTalleres", {
             method: "GET",
             headers: {
               'Content-Type': 'application/json',
@@ -276,7 +266,7 @@
             throw new Error("ID de taller inválido");
           }
       
-          const url = `https://localhost:7190/api/Servicio/ObtenerServiciosPorTallerID/${tallerid}`;
+          const url = `http://localhost:5280/api/Servicio/ObtenerServiciosPorTallerID/${tallerid}`;
           const response = await fetch(url, {
             method: "GET",
             headers: {
@@ -298,7 +288,7 @@
       
       async function GetVehiculeByUserId() {
         try {
-          const response = await fetch(`https://localhost:7190/api/Vehiculo/ObtenerVehiculoPorClienteID/${user_id}`, {
+          const response = await fetch(`http://localhost:5280/api/Vehiculo/ObtenerVehiculoPorClienteID/${user_id}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
