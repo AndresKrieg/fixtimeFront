@@ -69,7 +69,7 @@
             const Password = document.getElementById("Password").value;
 
             try {
-              const response = await fetch("http://localhost:5280/Logearse", {
+              const response = await fetch("https://localhost:7190/Logearse", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json"
@@ -92,7 +92,7 @@
                         break;
                     case "Administrador":
                         //window.location.href = "agendar.html";
-                        window.location.href="registrarcst.html";
+                        window.location.href="MiCitas.html";
                         break;
                     case "Recepcionista":
                         window.location.href = "MiCitas.html";

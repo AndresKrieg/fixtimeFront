@@ -1,0 +1,51 @@
+<script src="js/tokenservice.js"></script>
+
+export default async function GetMyVehicles(id,token) {
+    try{
+
+        const response=await fetch(`https://localhost:7190/api/Vehiculo/ObtenerVehiculoPorClienteID/${id}`,{
+            method:"GET",
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        });
+
+        if(response.status==200){
+            return await response.json();
+        }
+        else{
+            alert("No se han logrado obtener los vehiculos que tienes registrados");
+        }
+
+    }catch(error){
+        alert("No se han logrados obtener los datos de tus vehiculos"+error.message)
+    }
+}
+
+export default async function UpdateStateByAppointment(id,estadoDTO,token) {
+    try{
+        const response=await fetch(`https://localhost:7190/api/Citas/ActualizarEstadoCita/${id}`,{
+            method:"PUT",
+            headers:{
+                "Content-Type":"application/json",
+                "Authentication":"Bearer "+token
+            },
+            body:JSON.stringify(estadoDTO)
+        });
+
+        if(response.status==200){
+            return await response.json();
+        }
+        else{
+            return null;
+        }
+
+    }catch(error){
+        alert("No se han logrado modificar el estado de la cita "+error.message);
+        return null;
+
+    }
+    
+}
+
