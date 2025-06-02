@@ -51,7 +51,7 @@
                   <p> Fulanito Detal<small>Usuario</small></p>                  
                 </li>
               
-                <li class="user-footer"><a href="#" class="btn btn-default btn-flat float-end">Salir</a></li>            
+                <li class="user-footer"><a href="index.html" class="btn btn-default btn-flat float-end">Salir</a></li>            
               </ul>
             </li>
           </ul>
@@ -116,7 +116,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card-footer"><button id="btn-paso2" class="btn btn-info" type="submit">Buscar</button></div>
+                  <div class="card-footer"><button id="btn-paso2" class="btn btn-info" type="submit">Siguiente</button></div>
                 </form>
               </div>
               
@@ -200,9 +200,8 @@
                 title: taller.nombre || "Taller sin nombre"
               });
               
-              // Agregar info window (ventana de información)
               const infoWindow = new google.maps.InfoWindow({
-                content: `<div><strong>${taller.nombre || "Taller"}</strong><br>
+                content: `<img src="img/store.svg" width="40px" alt=""><br> <div><strong>${taller.nombre || "Taller"}</strong><br>
                          ${taller.ubicacion || "Dirección no disponible"}</div>`
               });
               

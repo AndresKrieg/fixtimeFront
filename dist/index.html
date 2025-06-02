@@ -81,7 +81,6 @@
 
               if (response.ok) {
                 localStorage.setItem("jwt", data.token);
-                alert("Inicio de sesión exitoso");
                 //window.location.href = "MiCitas.html";
                 const token_get=parseJwt(data.token)
                 const user_role=token_get.role
