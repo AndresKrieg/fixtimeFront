@@ -1,4 +1,6 @@
   document.addEventListener("DOMContentLoaded", () => {
+    
+ 
     const nav = document.getElementById("nav");
 
     const token = localStorage.getItem("jwt");
@@ -43,3 +45,12 @@
         nav.innerHTML = `<p>Rol desconocido.</p>`;
     }
     });
+
+    
+document.querySelectorAll(".nombre-usuario").forEach(el => {
+    el.textContent = nombre;
+});
+document.querySelectorAll(".rol-usuario").forEach(el => {
+    el.textContent = rol;
+});
+                

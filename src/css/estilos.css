@@ -391,6 +391,13 @@
     padding: .5em;
   }
 }
+.gm-style-iw {
+  display: inline-flex !important;
+  & img {
+    margin: 0 5px;
+    width: 30px;
+  }
+}
 .swal2-modal {
   background: #FFF;
   color: #0367a1;
@@ -411,13 +418,6 @@
   margin: 0 3px;
 }
 
-.gm-style .gm-style-iw {
-  display: flex !important;
-  & img {
-    margin: 0 5px;
-    width: 30px;
-  }
-}
 /* termina estilos siotio web propios*/
 
 @media(--pantallasGrandes) {
