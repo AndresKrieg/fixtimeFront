@@ -26,7 +26,7 @@
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
                 <li class="nav-item"><a href="miCitas.html" class="nav-link"><i class="bi bi-house-door"></i><p>Inicio</p></a></li>
                 <li class="nav-item"><a href="agendar.html" class="nav-link"><i class="bi bi-calendar-date"></i><p>Agendar Cita</p></a></li>
-                <li class="nav-item"><a href="registrarvehicle.html" class="nav-link"><i class="bi bi-car-front-fill"></i><p>Mis Vehículos</p></a></li>
+                <li class="nav-item"><a href="MiVehiculos.html" class="nav-link"><i class="bi bi-car-front-fill"></i><p>Mis Vehículos</p></a></li>
                 <li class="nav-item"><a href="actualizardatos.html" class="nav-link"><i class="bi bi-clipboard2-data"></i><p>Actualizar Datos</p></a></li>
             </ul>
         `;

@@ -14,11 +14,11 @@
           <div class="card-body login-card-body">
             <h1>RECUPERAR CONTRASEÑA</h1>
             <p class="login-box-msg">Ingresa tu email para enviarte la nueva contraseña</p>
-            <form method="post">
-              <div class="col-md-12"><label for="validationCustom02" class="form-label">Email</label><input type="email" class="form-control" id="validationCustom02" value="Otto" required />
+            <form method="post" class="needs-validation" novalidate>
+              <div class="col-md-12"><label for="validationCustom02" class="form-label">Email</label><input type="email" class="form-control" id="email" required />
                 <div class="valid-feedback">Ok!</div>
               </div><br>
-              <div class="card-footer"><button class="btn btn-primary" type="submit">Registrarme</button></div>
+              <div class="card-footer"><button class="btn btn-primary" type="submit">Recuperar contraseña</button></div>
             </form>
           </div>
         </div>
@@ -30,20 +30,80 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="js/adminlte.js"></script>
     <script>
-      (() => {
-        'use strict';
-        const forms = document.querySelectorAll('.needs-validation');
-        Array.from(forms).forEach((form) => {
-          form.addEventListener('submit',
-            (event) => {
-              if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-            }, false, );
+    (() => {
+      'use strict';
+      // Configuración de validación
+        const form = document.querySelector('form');
+        form.classList.add('needs-validation');
+    
+      form.addEventListener('submit', async (event) => {
+          event.preventDefault(); // Previene el envío tradicional
+          event.stopPropagation();
+      
+          if (!form.checkValidity()) {
+          form.classList.add('was-validated');
+          return;
+      }
+      
+        await OlvideMiContraseña();
+    }, false);
+  })();
+
+  async function OlvideMiContraseña() {
+    try {
+      const email = document.getElementById("email").value;
+      
+      if (!email) {
+        alert("Por favor ingresa un email válido");
+        return;
+      }
+
+      const forgotmypassword = {
+        Email: email
+      };
+
+      // Asegúrate que RecuperarContraseña está definido en funcioneshttp.js
+      const response = await RecuperarContraseña(forgotmypassword);
+
+      if (!response || response.error) {
+        alert(response?.message || "No existe una cuenta con este correo");
+        return;
+      }
+
+      alert("Se ha enviado un correo con instrucciones para recuperar tu contraseña"+response.usuarioID);
+      // Redirección opcional después del éxito
+      // window.location.href = 'login.html'; 
+
+    } catch(error) {
+      console.error("Error en recuperación:", error.message);
+      alert("Error al procesar la solicitud: " + error.message);
+    }
+  }
+</script>
+<script>
+  async function RecuperarContraseña(ForgotPasswordRequest) {
+    try{
+        const response=await fetch("https://localhost:7190/api/Usuarios/RecuperarContraseña",{
+            method:"POST",
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(ForgotPasswordRequest)
         });
-      })();
-    </script>
-  </body>
+
+        if(response.status==200){
+          const data=await response.json();
+          console.log(data);
+          return data;
+        }
+        else{
+           return null;
+        }
+
+    }catch(error){
+            alert("No se han encontrado el correo"+error.message);
+    }
+  }
+</script>
+</body>
 </html>

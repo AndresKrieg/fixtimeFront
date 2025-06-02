@@ -1,6 +1,6 @@
 <script src="js/tokenservice.js"></script>
 
-export default async function GetMyVehicles(id,token) {
+export  async function GetMyVehicles(id,token) {
     try{
 
         const response=await fetch(`https://localhost:7190/api/Vehiculo/ObtenerVehiculoPorClienteID/${id}`,{
@@ -23,7 +23,7 @@ export default async function GetMyVehicles(id,token) {
     }
 }
 
-export default async function UpdateStateByAppointment(id,estadoDTO,token) {
+export  async function UpdateStateByAppointment(id,estadoDTO,token) {
     try{
         const response=await fetch(`https://localhost:7190/api/Citas/ActualizarEstadoCita/${id}`,{
             method:"PUT",
@@ -45,6 +45,29 @@ export default async function UpdateStateByAppointment(id,estadoDTO,token) {
         alert("No se han logrado modificar el estado de la cita "+error.message);
         return null;
 
+    }
+    
+}
+
+export default async function RecuperarContraseña(ForgotPasswordRequest) {
+    try{
+        const response=await fetch("https://localhost:7190/api/Usuarios/RecuperarContraseña",{
+            method:"POST",
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(ForgotPasswordRequest)
+        });
+
+        if(response.status==200){
+            return await response.json();
+        }
+        else{
+           return null;
+        }
+
+    }catch(error){
+            alert("No se han encontrado el correo"+error.message);
     }
     
 }

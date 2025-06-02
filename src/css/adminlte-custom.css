@@ -10759,6 +10759,8 @@ html.maximized-card {
 }
 .info-box .info-box-icon > img {
   max-width: 40px;
+  width: 40px;
+  margin: 0px 5px;
 }
 .info-box .info-box-content {
   line-height: 1.3;
