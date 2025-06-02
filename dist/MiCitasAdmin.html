@@ -198,12 +198,12 @@
 
                 let url = "";
 
-                if (rol === "Recepcionista") {
-                    console.log("URL para Recepcionista");
-                    url = "http://localhost:5280/api/Citas/ConsultarCitasPorRcepecionistaID/" + user_id;
+                if (rol == "Administrador") {
+                    console.log("URL para Administrador");
+                    url = "https://localhost:7190/api/Citas/ConsultarCitasPorRcepecionistaID/" + user_id;
                 } else {
                     console.log("URL para Cliente");
-                    url = "http://localhost:5280/api/Citas/ConsultarCitasPorClienteID/" + user_id;
+                    url = "https://localhost:7190/api/Citas/ConsultarCitasPorClienteID/" + user_id;
                 }
 
                 console.log("URL generada:", url);
@@ -258,7 +258,7 @@
                 if (result.isConfirmed) {
                     const nuevoEstado = result.value;
 
-                    fetch(`http://localhost:5280/api/Citas/ActualizarEstadoCita/${id}`, {
+                    fetch(`https://localhost:7190/api/Citas/ActualizarEstadoCita/${id}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',

@@ -63,7 +63,7 @@
             const clave = document.getElementById("clave").value;
 /*             waltergutierrez1115679@correo.itm.edu.co WALTER2005*/
             try {
-              const response = await fetch("http://localhost:5280/Logearse", {
+              const response = await fetch("https://localhost:7190/Logearse", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ correo, clave })

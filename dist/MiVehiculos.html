@@ -191,7 +191,7 @@
             const user_id = decode.UsuarioID;
             const rol = decode.role;
 
-            let url = `http://localhost:5280/api/Vehiculo/ObtenerVehiculoPorClienteID/${user_id}`;
+            let url = `https://localhost:7190/api/Vehiculo/ObtenerVehiculoPorClienteID/${user_id}`;
             console.log("URL generada:", url);
 
             const response = await fetch(url, {

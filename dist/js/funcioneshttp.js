@@ -3,7 +3,7 @@
 export  async function GetMyVehicles(id,token) {
     try{
 
-        const response=await fetch(`http://localhost:5280/api/Vehiculo/ObtenerVehiculoPorClienteID/${id}`,{
+        const response=await fetch(`https://localhost:7190/api/Vehiculo/ObtenerVehiculoPorClienteID/${id}`,{
             method:"GET",
             headers:{
                 'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ export  async function GetMyVehicles(id,token) {
 
 export  async function UpdateStateByAppointment(id,estadoDTO,token) {
     try{
-        const response=await fetch(`http://localhost:5280/api/Citas/ActualizarEstadoCita/${id}`,{
+        const response=await fetch(`https://localhost:7190/api/Citas/ActualizarEstadoCita/${id}`,{
             method:"PUT",
             headers:{
                 "Content-Type":"application/json",
@@ -51,7 +51,7 @@ export  async function UpdateStateByAppointment(id,estadoDTO,token) {
 
 export default async function RecuperarContraseña(ForgotPasswordRequest) {
     try{
-        const response=await fetch("http://localhost:5280/api/Usuarios/RecuperarContraseña",{
+        const response=await fetch("https://localhost:7190/api/Usuarios/RecuperarContraseña",{
             method:"POST",
             headers:{
                 'Content-Type': 'application/json'
