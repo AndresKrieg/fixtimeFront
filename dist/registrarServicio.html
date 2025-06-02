@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Registrar CST</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/styles/overlayscrollbars.min.css" integrity="sha256-tZHrRjVqNSRyWg2wbppGnT833E/Ys0DHWGwT04GiqQg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" integrity="sha256-9kPW/n5nn53j4WMRYAxe9c1rCY96Oogo/MKSVdKzPmI=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/estilos.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css" integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous" />
+  </head>
+  <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    <div class="app-wrapper">
+      <nav class="app-header navbar navbar-expand bg-body">
+        <div class="container-fluid">
+          <ul class="navbar-nav ms-auto">    
+            <li class="nav-item dropdown user-menu"><a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><img src="img/user2-160x160.jpg" class="user-image rounded-circle shadow" alt="User Image" /><span class="d-none d-md-inline">Fulanito Detal</span></a>
+              <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                <li class="user-header text-bg-primary"><img src="img/user2-160x160.jpg" class="rounded-circle shadow" alt="User Image" />
+                  <p> Fulanito Detal<small>Usuario</small></p>                  
+                </li>
+                <li class="user-footer"><a href="index.html" class="btn btn-default btn-flat float-end">Salir</a></li>            
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+        <div class="sidebar-brand"><a href="./index.html" class="brand-link"><img src="img/fixtimeLogo.svg" alt="AdminLTE Logo" class="brand-image" /> <span class="brand-text fw-light"></span></a></div>
+        <div class="sidebar-wrapper">
+          <nav class="mt-2" id="nav"></nav>
+        </div>
+      </aside>
+      <main class="app-main">
+        <div class="app-content-header">
+          <div class="container">
+            <div class="row titlemRoles">
+              <div class="col-sm-6">
+                <h3>Registrar Servicio</h3>
+                <p>Ingresa los datos relevantes del Servicio</p>
+              </div>
+              <div class="col-sm-6">
+                <h3 class="mt-1">Registra tu Servicio</h3><button id="btn-agregarUsuario" class="btn btn-secondary btn-navegar" type="button" data-url="MiCitasAdmin.html">Ver mis citas</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="app-content">
+          <div class="container">
+            <form class="needs-validation" novalidate>
+            <div class="card-body">
+              <div class="card-header">
+                <div class="card-title">Registra tus Servicios</div>
+              </div>
+              <div class="row g-3">
+                <div class="col-md-4"><label for="validationCustom01" class="form-label">Nombre Servicio</label><input type="text" class="form-control" id="Nombre" value="" required />
+                  <div class="valid-feedback">Ok</div>
+                </div>
+                <div class="col-md-4"><label for="validationCustom01" class="form-label">Descripcion del servicio</label><input type="text" class="form-control" id="Descripcion" value="" required />
+                  <div class="valid-feedback">Ok</div>
+                </div>
+                <div class="col-md-4"><label for="validationCustom01" class="form-label">Precio</label><input type="text" class="form-control" id="Precio" value="" required />
+                  <div class="valid-feedback">Ok</div>
+                </div>
+             <div class="col-md-4">
+              <label for="tallerId" class="form-label">Taller</label>
+              <select id="tallerId" class="form-select" required>
+                <option value="" disabled selected>Selecciona un taller</option>
+              </select>
+              <div class="invalid-feedback">Por favor selecciona un taller.</div>
+            </div>
+
+              </div>
+            </div>
+            <br>
+            <div class="card-footer"><button class="btn btn-primary" type="submit">Registrar saervicio</button></div>
+          </form>
+          </div>
+          </section>
+        </div>
+      </main>
+      <footer class="app-footer">
+        <div class="float-end d-none d-sm-inline">fixtime</div>
+      </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js" integrity="sha256-dghWARbRe2eLlIJ56wNB+b760ywulqK3DzZYEpsg2fQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="js/adminlte.js"></script>
+    <script src="js/tokenservice.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js" integrity="sha256-dghWARbRe2eLlIJ56wNB+b760ywulqK3DzZYEpsg2fQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/tokenservice.js">
+    </script>
+    <script>
+  (() => {
+    'use strict';
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach((form) => {
+      form.addEventListener('submit', (event) => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  })();
+  document.addEventListener('DOMContentLoaded', cargarTalleres);
+  document.querySelectorAll('.btn-navegar').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const url = this.getAttribute('data-url');
+      if (url) {
+        window.location.href = url;
+      } else {
+        console.warn('No se encontró data-url en el botón.');
+      }
+    });
+  });
+
+  const token = localStorage.getItem("jwt");
+  const decode = parseJwt(token);
+  const user_id = decode.UsuarioID;
+
+async function cargarTalleres() {
+  try {
+    const token = localStorage.getItem('jwt');
+    if (!token) throw new Error('Token no encontrado');
+
+    const response = await fetch('http://localhost:5280/api/Taller/ObtenerTalleres', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+    });
+
+    if (!response.ok) throw new Error('Error al cargar talleres');
+    const talleres = await response.json();
+
+    const select = document.getElementById('tallerId');
+    
+   talleres.forEach(taller => {
+  if (taller?.tallerID != null && taller?.nombre) {
+    const option = document.createElement('option');
+    option.value = taller.tallerID;
+    option.textContent = taller.nombre;
+    select.appendChild(option);
+  } else {
+    console.warn("Taller inválido:", taller);
+  }
+});
+  } catch (error) {
+    console.error(error);
+    Swal.fire('Error', 'No se pudieron cargar los talleres', 'error');
+  }
+}
+
+
+async function AddService() {
+  try {
+    const token = localStorage.getItem("jwt");
+    const decode = parseJwt(token);
+    const user_id = decode.UsuarioID;
+
+    const nombre = document.getElementById("Nombre").value.trim();
+    const descripcion = document.getElementById("Descripcion").value.trim();
+    const precio = parseFloat(document.getElementById("Precio").value);
+    const tallerId = parseInt(document.getElementById("tallerId").value);
+
+    // Validar campos
+    if (!nombre || !descripcion || isNaN(precio) || isNaN(tallerId)) {
+      Swal.fire("Error", "Todos los campos son obligatorios y válidos.", "error");
+      return;
+    }
+
+    const payload = {
+      servicioID: 0,   // o puedes no enviarlo, si el backend lo maneja solo
+      nombre,
+      descripcion,
+      precio,
+      tallerId
+    };
+
+    const response = await fetch("http://localhost:5280/api/Servicio/AgregarServicio", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (response.ok) {
+      Swal.fire({
+        title: 'Servicio registrado correctamente',
+        text: 'Tu nuevo servicio ha sido registrado.',
+        icon: 'success',
+        confirmButtonText: 'Ver mis citas'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = 'MiCitasAdmin.html';
+        }
+      });
+    } else {
+      const errorMsg = await response.text();
+      throw new Error(errorMsg || 'Error al registrar el servicio');
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    Swal.fire('Error', error.message || 'No se pudo registrar el servicio', 'error');
+  }
+}
+
+
+
+
+
+ const form = document.querySelector('.needs-validation');
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  form.classList.add('was-validated');
+
+  if (form.checkValidity()) {
+    await AddService();
+  }
+});
+</script>
+
+</body>
+</html>

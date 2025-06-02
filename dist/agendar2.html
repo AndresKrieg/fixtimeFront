@@ -91,10 +91,12 @@
                         </select><span class="invalid-feedback">Seleccione una hora</span></aside>
                     </div>
                     <div>
-                      <h3>¿Deseas agregar un servicio extra?</h3><select class="form-select" id="servicio-extra" required>
+                      <h3>¿Deseas agregar un servicio extra?</h3>
+                      <select class="form-select" id="servicio-extra" required>
                         <option selected disabled value="">Selecciona una servicio</option>
                         <option value="1"><i class="bi bi-gear-fill"></i>Servicio tipo 1 {precio}</option>
-                      </select><span class="invalid-feedback"> Selecciona el tipo de servicio</span>
+                      </select>
+                      <span class="invalid-feedback"> Selecciona el tipo de servicio</span>
                     </div>
                     <div class="card-footer"><button id="btn-registrar" class="btn btn-primary" type="submit">Registrarme</button></div>
                   </form>
@@ -135,8 +137,8 @@
           const administradorID=citaData.AdministradorID;
           console.log(administradorID);
           
-          // Consultar información del taller
           await cargarDatosTaller(tallerId);
+          await cargarServicios(tallerId);
           
           // Inicializar el calendario
           inicializarCalendario();
@@ -149,11 +151,12 @@
         }
       });
       
-      // Función para cargar datos del taller
+     
       async function cargarDatosTaller(tallerId) {
         try {
           
           console.log("User ID:", user_id);
+           console.log("Taller ID:", tallerId);
           const citaData = JSON.parse(sessionStorage.getItem('citaData')) || {};
 
           const response = await fetch(`https://localhost:7190/api/Taller/ObtenerTallerPorID/${citaData.tallerId}`, {
@@ -308,5 +311,38 @@
         });
       }
     </script>
+    <script>
+      async function cargarServicios(tallerId) {
+      try {
+        const response = await fetch(`http://localhost:5280/api/Servicio/ObtenerServiciosPorTallerID/${tallerId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          }
+        });
+
+        if (!response.ok) throw new Error('Error al cargar servicios');
+
+        const servicios = await response.json();
+
+        const select = document.getElementById('servicio-extra');
+        select.querySelectorAll('option:not([disabled])').forEach(opt => opt.remove());
+
+        servicios.forEach(servicio => {
+          const option = document.createElement('option');
+          option.value = servicio.servicioID;
+          option.textContent = `${servicio.nombre} - $${servicio.precio.toFixed(2)}`;
+          select.appendChild(option);
+        });
+
+      } catch (error) {
+        console.error('Error al cargar servicios:', error);
+        mostrarError('No se pudieron cargar los servicios del taller');
+      }
+    }
+
+    </script>
+    
   </body>
 </html>
