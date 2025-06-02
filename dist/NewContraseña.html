@@ -12,13 +12,13 @@
         <figure class="logoLogin"><img src="img/logoColor.png" width="100%" alt=""></figure>
         <div class="card">
           <div class="card-body login-card-body">
-            <h1>RECUPERAR CONTRASEÑA</h1>
-            <p class="login-box-msg">Ingresa tu email para enviarte la nueva contraseña</p>
+            <h1>INGRESAR NUEVA CONTRASEÑA</h1>
+            <p class="login-box-msg">Ingresa tu nueva contraseña</p>
             <form method="post" class="needs-validation" novalidate>
-              <div class="col-md-12"><label for="validationCustom02" class="form-label">Email</label><input type="email" class="form-control" id="email" required />
+              <div class="col-md-12"><label for="validationCustom02" class="form-label">Contraseña</label><input type="password" class="form-control" id="password" required />
                 <div class="valid-feedback">Ok!</div>
               </div><br>
-              <div class="card-footer"><button class="btn btn-primary" type="submit">Recuperar contraseña</button></div>
+              <div class="card-footer"><button class="btn btn-primary" type="submit">Cambiar contraseña</button></div>
             </form>
           </div>
         </div>
@@ -45,35 +45,39 @@
           return;
       }
       
-        await OlvideMiContraseña();
+        await CambiarMiContraseña();
     }, false);
   })();
 
-  async function OlvideMiContraseña() {
+  const params = new URLSearchParams(window.location.search);
+  const Token = params.get('token');
+
+  async function CambiarMiContraseña() {
     try {
-      const email = document.getElementById("email").value;
       
-      if (!email) {
+
+      const password = document.getElementById("password").value;
+
+      if (!password) {
         alert("Por favor ingresa un email válido");
         return;
       }
 
-      const forgotmypassword = {
-        Email: email
+      const resetpasswordrequest = {
+        token: Token,
+        newPassword:password
       };
 
       // Asegúrate que RecuperarContraseña está definido en funcioneshttp.js
-      const response = await RecuperarContraseña(forgotmypassword);
+      const response = await IngresarNuevaContraseña(resetpasswordrequest);
 
       if (!response || response.error) {
-        alert(response?.message || "No existe una cuenta con este correo");
+        alert(response?.message || "No se ha logrado cambiar tu contraseña");
+        return;
       }
 
-      alert("Se ha enviado un correo con instrucciones para recuperar tu contraseña"+response.usuarioID);
-
-      const token=response.token;
-      console.log(token);
-      window.location.href = `NewContraseña.html?token=${token}`;
+      alert("se ha logrado actualizar tu contraseña correctamente"+response.usuarioID);
+      window.location.href="index.html"
       // Redirección opcional después del éxito
       // window.location.href = 'login.html'; 
 
@@ -84,14 +88,14 @@
   }
 </script>
 <script>
-  async function RecuperarContraseña(ForgotPasswordRequest) {
+  async function IngresarNuevaContraseña(ResetPasswordRequest) {
     try{
-        const response=await fetch("https://localhost:7190/api/Usuarios/RecuperarContraseña",{
-            method:"POST",
+        const response=await fetch("https://localhost:7190/api/Usuarios/IngresarNuevaContraseña",{
+            method:"PUT",
             headers:{
                 'Content-Type': 'application/json'
             },
-            body:JSON.stringify(ForgotPasswordRequest)
+            body:JSON.stringify(ResetPasswordRequest)
         });
 
         if(response.status==200){
@@ -104,7 +108,7 @@
         }
 
     }catch(error){
-            alert("No se han encontrado el correo"+error.message);
+            alert("No se ha logrado cambiar tu contraseña"+error.message);
     }
   }
 </script>
