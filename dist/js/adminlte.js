@@ -37,7 +37,7 @@
         case "Recepcionista":
         nav.innerHTML = `
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
-                <li class="nav-item"><a href="miCitas.html" class="nav-link"><i class="bi bi-calendar-date"></i><p>Citas Agendadas</p></a></li>
+                <li class="nav-item"><a href="MiCitasAdmin.html" class="nav-link"><i class="bi bi-calendar-date"></i><p>Citas Agendadas</p></a></li>
                 <li class="nav-item"><a href="actualizardatos.html" class="nav-link"><i class="bi bi-clipboard2-data"></i><p>Actualizar Datos</p></a></li>
             </ul>
         `;

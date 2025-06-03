@@ -131,7 +131,7 @@ async function cargarTalleres() {
     const token = localStorage.getItem('jwt');
     if (!token) throw new Error('Token no encontrado');
 
-    const response = await fetch('http://localhost:5280/api/Taller/ObtenerTalleres', {
+    const response = await fetch('https://localhost:7190/api/Taller/ObtenerTalleresPorAdministrador/'+user_id, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -186,7 +186,7 @@ async function AddService() {
       tallerId
     };
 
-    const response = await fetch("http://localhost:5280/api/Servicio/AgregarServicio", {
+    const response = await fetch("https://localhost:7190/api/Servicio/AgregarServicio", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

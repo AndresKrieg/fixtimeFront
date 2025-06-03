@@ -22,7 +22,24 @@
         <nav class="app-header navbar navbar-expand bg-body">
             <div class="container-fluid">
                 <ul class="navbar-nav ms-auto">
-                   
+                    <li class="nav-item dropdown"><a class="nav-link" data-bs-toggle="dropdown" href="#"><i
+                                class="bi bi-bell-fill"></i><span
+                                class="navbar-badge badge text-bg-warning">15</span></a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end"><span
+                                class="dropdown-item dropdown-header">15 Notificaciones</span>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item"><i class="bi bi-envelope me-2"></i> 4 new messages <span
+                                    class="float-end text-secondary fs-7">3 mins</span></a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item"><i class="bi bi-people-fill me-2"></i> 8 friend requests
+                                <span class="float-end text-secondary fs-7">12 hours</span></a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item"><i class="bi bi-file-earmark-fill me-2"></i> 3 new reports
+                                <span class="float-end text-secondary fs-7">2 days</span></a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item dropdown-footer"> See All Notifications </a>
+                        </div>
+                    </li>
                     <li class="nav-item dropdown user-menu"><a href="#" class="nav-link dropdown-toggle"
                             data-bs-toggle="dropdown"><img src="img/user2-160x160.jpg"
                                 class="user-image rounded-circle shadow" alt="User Image" /><span
@@ -137,7 +154,7 @@
                                 <p><i class="bi bi-clock-fill"></i> ${horaTexto}</p>
                             </div>
                             <div class="col-md-6 inlineButtonsCard">
-                                <button class="actionCard actionInfo" onclick="cambiarEstadoCita('${cita.id}', '${cita.estado}')">Cambiar estado</button>
+                                <button class="actionCard actionInfo" onclick="cambiarEstadoCita('${cita.citaId}', '${cita.estado}')">Cambiar estado</button>
                                 <p>${cita.estado}</p>
                             </div>
                         </div>
@@ -179,15 +196,7 @@
                 console.log("User ID:", user_id);
                 console.log("Rol:", rol);
 
-                let url = "";
-
-                if (rol == "Administrador") {
-                    console.log("URL para Administrador");
-                    url = "https://localhost:7190/api/Citas/ConsultarCitasPorRcepecionistaID/" + user_id;
-                } else {
-                    console.log("URL para Cliente");
-                    url = "https://localhost:7190/api/Citas/ConsultarCitasPorClienteID/" + user_id;
-                }
+                const url="https://localhost:7190/api/Citas/ConsultarCitasPorRcepecionistaID/" + user_id;
 
                 console.log("URL generada:", url);
 
@@ -215,6 +224,7 @@
        function cambiarEstadoCita(id, estadoActual) {
             const estados = ['No asistió', 'Cancelada', 'Finalizada', 'En Proceso', 'Pendiente'];
             console.log('ID de cita recibido:', id);
+            console.log("Estado de la cita "+estadoActual)
 
             let optionsHTML = estados.map(estado => `
                 <option value="${estado}" ${estado === estadoActual ? 'selected' : ''}>${estado}</option>
@@ -223,7 +233,7 @@
             Swal.fire({
                 title: '¿Deseas cambiar el estado de la cita?',
                 html: `
-                    <select id="nuevoEstado" class="swal2-select" style="width: 100%; padding: 10px;">
+                    <select id="nuevoEstado" class="swal2-select" style="padding: 10px;">
                         ${optionsHTML}
                     </select>
                 `,
@@ -241,6 +251,10 @@
                 if (result.isConfirmed) {
                     const nuevoEstado = result.value;
 
+                    const estadoDTO={
+                        Estado:nuevoEstado
+                    };
+
                     fetch(`https://localhost:7190/api/Citas/ActualizarEstadoCita/${id}`, {
                         method: 'PUT',
                         headers: {
@@ -248,13 +262,13 @@
                             'Accept': 'text/plain',
                             'Authorization': 'Bearer ' + localStorage.getItem("jwt")
                         },
-                        body: JSON.stringify({ estado: nuevoEstado })
+                        body: JSON.stringify(estadoDTO)
                     })
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Error al actualizar el estado');
                         }
-                        return response.text(); // Tu backend responde text/plain
+                        return response.text(); 
                     })
                     .then(data => {
                         Swal.fire('¡Estado actualizado!', `La cita ha sido marcada como "${nuevoEstado}".`, 'success')

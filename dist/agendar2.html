@@ -314,7 +314,7 @@
     <script>
       async function cargarServicios(tallerId) {
       try {
-        const response = await fetch(`http://localhost:5280/api/Servicio/ObtenerServiciosPorTallerID/${tallerId}`, {
+        const response = await fetch(`https://localhost:7190/api/Servicio/ObtenerServiciosPorTallerID/${tallerId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
